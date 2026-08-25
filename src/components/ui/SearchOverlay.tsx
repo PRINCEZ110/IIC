@@ -194,6 +194,7 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
                   aria-autocomplete="list"
                   aria-controls="search-results"
                   aria-expanded={results.length > 0}
+                  aria-activedescendant={selectedIndex >= 0 ? `${results[selectedIndex]?.type}-${results[selectedIndex]?.href}-${selectedIndex}` : undefined}
                 />
                 {isLoading && (
                   <Loader2

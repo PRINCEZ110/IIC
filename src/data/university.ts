@@ -219,12 +219,12 @@ export const researchThemes = [
 ];
 
 export const researchStats = [
-  { value: 'Rs. 120M+', label: 'Research Funding Secured' },
-  { value: '150+', label: 'Research Publications (2023-24)' },
-  { value: '45', label: 'Active PhD Researchers' },
-  { value: '25+', label: 'Industry Research Partners' },
-  { value: '8', label: 'Research Centres & Labs' },
-  { value: '95%', label: 'Research Impact Rating' },
+  { value: 'Rs. 120M+', label: 'Research Funding Secured', suffix: '' },
+  { value: '150+', label: 'Research Publications (2023-24)', suffix: '' },
+  { value: '45', label: 'Active PhD Researchers', suffix: '' },
+  { value: '25+', label: 'Industry Research Partners', suffix: '' },
+  { value: '8', label: 'Research Centres & Labs', suffix: '' },
+  { value: '95%', label: 'Research Impact Rating', suffix: '' },
 ];
 
 export const researchers = [

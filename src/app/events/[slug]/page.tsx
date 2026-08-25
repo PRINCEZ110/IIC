@@ -30,9 +30,9 @@ export async function generateMetadata({ params }: EventDetailProps): Promise<Me
     openGraph: {
       title: event.title,
       description: event.description,
-      type: 'website',
+      type: 'website' as const,
       images: [{ url: event.image, alt: event.title }],
-    } as const,
+    },
   };
 }
 
@@ -116,7 +116,14 @@ export default async function EventDetailPage({ params }: EventDetailProps) {
 
             <div className="prose prose-lg text-dark-grey leading-relaxed max-w-none mb-10 md:mb-14">
               <p>{event.description}</p>
-              <p>Join us for this exciting event where you&apos;ll have the opportunity to learn, network, and engage with experts and peers in the field.</p>
+              <p>Join us for this exciting event where you'll have the opportunity to learn, network, and engage with experts and peers in the field.</p>
+              <h3>What to Expect</h3>
+              <ul>
+                <li>Expert presentations and keynote sessions</li>
+                <li>Interactive workshops and hands-on sessions</li>
+                <li>Networking opportunities with peers and industry professionals</li>
+                <li>Q&A sessions with speakers</li>
+              </ul>
             </div>
 
             {event.registrationRequired && event.registrationUrl && (

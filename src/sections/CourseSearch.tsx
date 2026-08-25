@@ -136,6 +136,7 @@ export function CourseSearch() {
                         onClick={() => handleSuggestionClick(suggestion)}
                         className="w-full px-5 py-3 text-left text-navy hover:bg-lime/10 hover:text-lime transition-colors flex items-center gap-3"
                         role="option"
+                        aria-selected={false}
                       >
                         <Search className="w-5 h-5 text-navy/40" aria-hidden="true" />
                         <span>{suggestion}</span>

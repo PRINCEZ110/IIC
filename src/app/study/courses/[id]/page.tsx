@@ -66,13 +66,13 @@ export default async function CoursePage({ params }: CoursePageProps) {
                   </h2>
                   <div className="prose prose-lg text-dark-grey leading-relaxed max-w-none">
                     <p className="text-lg mb-6">{course.description}</p>
-                    <p className="mb-6">This programme is designed to provide you with the knowledge, skills, and practical experience needed to excel in the rapidly evolving field of {course.subject.toLowerCase()}. Through a combination of theoretical learning, hands-on projects, and industry engagement, you&apos;ll develop the expertise that employers value.</p>
-                    <p className="mb-6">The curriculum is regularly updated in consultation with our industry advisory board to ensure it remains relevant and aligned with current industry needs. You&apos;ll learn from academics who are active researchers and practitioners, bringing real-world insights into the classroom.</p>
+                    <p className="mb-6">This programme is designed to provide you with the knowledge, skills, and practical experience needed to excel in the rapidly evolving field of {course.subject.toLowerCase()}. Through a combination of theoretical learning, hands-on projects, and industry engagement, you'll develop the expertise that employers value.</p>
+                    <p className="mb-6">The curriculum is regularly updated in consultation with our industry advisory board to ensure it remains relevant and aligned with current industry needs. You'll learn from academics who are active researchers and practitioners, bringing real-world insights into the classroom.</p>
                   </div>
                 </div>
 
                 <div className="border-t border-light-grey pt-10">
-                  <h3 className="font-display font-bold text-navy text-2xl mb-6">What You&apos;ll Study</h3>
+                  <h3 className="font-display font-bold text-navy text-2xl mb-6">What You'll Study</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {course.modules.map((module, index) => (
                       <div key={index} className="flex items-start gap-3 p-4 bg-off-white border border-light-grey hover:border-lime transition-colors">
@@ -179,9 +179,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
                   <p className="text-dark-grey text-sm mb-4">{course.entryRequirements}</p>
                   <Link href="/admissions/requirements" className="inline-flex items-center gap-1 text-lime font-medium hover:text-lime-dark transition-colors text-sm">
                     View detailed requirements
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                   </Link>
                 </div>
               </aside>
