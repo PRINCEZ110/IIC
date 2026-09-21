@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { motion} from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useReducedMotion } from '@/hooks/useMediaQuery';
 import { cn } from '@/lib/utils';
@@ -42,6 +42,8 @@ export function PeopleCarousel({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(3);
   const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateItemsPerView = () => {
@@ -69,24 +71,24 @@ export function PeopleCarousel({
   }, [maxIndex]);
 
   useEffect(() => {
-    if (!autoPlay || reducedMotion) return;
+    if (!autoPlay || reducedMotion || isPaused) return;
     const interval = setInterval(goToNext, autoPlayInterval);
     return () => clearInterval(interval);
-  }, [autoPlay, autoPlayInterval, goToNext, reducedMotion]);
+  }, [autoPlay, autoPlayInterval, goToNext, reducedMotion, isPaused]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.touches[0].clientX);
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStart === null) return;
-    const touchEnd = e.touches[0].clientX;
+    const touchEnd = e.changedTouches[0].clientX;
     const diff = touchStart - touchEnd;
     if (Math.abs(diff) > 50) {
       if (diff > 0) goToNext();
       else goToPrev();
-      setTouchStart(null);
     }
+    setTouchStart(null);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -99,8 +101,19 @@ export function PeopleCarousel({
     }
   };
 
+  // Calculate card width as a percentage (accounting for gap)
+  const gapPx = 24; // gap-6 = 1.5rem = 24px
+  const cardWidthPercent = itemsPerView > 1
+    ? `calc(${100 / itemsPerView}% - ${(gapPx * (itemsPerView - 1)) / itemsPerView}px)`
+    : '100%';
+
   return (
-    <section className="py-16 md:py-24 lg:py-32 bg-white" aria-labelledby="people-heading">
+    <section
+      className="py-16 md:py-24 lg:py-32 bg-white"
+      aria-labelledby="people-heading"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -119,43 +132,48 @@ export function PeopleCarousel({
           )}
         </motion.div>
 
-        <div className="relative" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onKeyDown={handleKeyDown} role="region" aria-label={`${title} carousel`}>
-          <div className="overflow-hidden">
+        <div
+          className="relative"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          onKeyDown={handleKeyDown}
+          role="region"
+          aria-label={`${title} carousel`}
+          tabIndex={0}
+        >
+          <div className="overflow-hidden" ref={trackRef}>
             <motion.div
-              className="flex gap-6"
-              style={{ transform: `translateX(-${(currentIndex / Math.max(1, people.length - itemsPerView)) * 100}%)` }}
+              className="flex"
+              style={{ gap: `${gapPx}px` }}
+              animate={{ x: `-${currentIndex * (100 / itemsPerView)}%` }}
               transition={reducedMotion ? { duration: 0 } : { duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
             >
-              {people.map((person, index) => (
+              {people.map((person) => (
                 <article
                   key={person.id}
-                  className={cn(
-                    'flex-shrink-0 w-full',
-                    'sm:max-w-[calc(50%-1.5rem)]',
-                    'md:max-w-[calc(33.333%-2rem)]',
-                    'lg:max-w-[calc(33.333%-2rem)]'
-                  )}
+                  className="flex-shrink-0"
+                  style={{ width: cardWidthPercent }}
                 >
                   {person.link ? (
                     <Link href={person.link} className="group block h-full">
                       <div className="relative aspect-square overflow-hidden bg-light-grey mb-4">
                         <Image
                           src={person.image}
-                          alt=""
+                          alt={person.name}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
                           sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
                       </div>
-                      <h3 className="font-display font-bold text-navy text-xl mb-1 group-hover:text-lime transition-colors">
+                      <h3 className="font-display font-bold text-navy text-xl mb-1 group-hover:text-lime-deep transition-colors">
                         {person.name}
                       </h3>
                       {person.title && (
                         <p className="text-medium-grey text-sm mb-1">{person.title}</p>
                       )}
                       {person.subtitle && (
-                        <p className="text-lime font-medium text-sm mb-3">{person.subtitle}</p>
+                        <p className="text-lime-deep font-medium text-sm mb-3">{person.subtitle}</p>
                       )}
                       {person.description && (
                         <p className="text-dark-grey text-sm line-clamp-2">{person.description}</p>
@@ -166,7 +184,7 @@ export function PeopleCarousel({
                       <div className="relative aspect-square overflow-hidden bg-light-grey mb-4">
                         <Image
                           src={person.image}
-                          alt=""
+                          alt={person.name}
                           fill
                           className="object-cover"
                           sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
@@ -177,7 +195,7 @@ export function PeopleCarousel({
                         <p className="text-medium-grey text-sm mb-1">{person.title}</p>
                       )}
                       {person.subtitle && (
-                        <p className="text-lime font-medium text-sm mb-3">{person.subtitle}</p>
+                        <p className="text-lime-deep font-medium text-sm mb-3">{person.subtitle}</p>
                       )}
                       {person.description && (
                         <p className="text-dark-grey text-sm line-clamp-2">{person.description}</p>
@@ -189,6 +207,7 @@ export function PeopleCarousel({
             </motion.div>
           </div>
 
+          {/* Controls */}
           <div className="flex items-center justify-center gap-4 mt-8">
             <button
               onClick={goToPrev}
@@ -205,15 +224,15 @@ export function PeopleCarousel({
             </button>
 
             <div className="flex items-center gap-2" role="tablist" aria-label={`${title} slides`}>
-              {Array.from({ length: Math.max(1, people.length - itemsPerView + 1) }, (_, i) => (
+              {Array.from({ length: maxIndex + 1 }, (_, i) => (
                 <button
                   key={i}
                   onClick={() => goToSlide(i)}
                   className={cn(
-                    'w-2.5 h-2.5 rounded-full transition-all duration-200',
+                    'h-2.5 rounded-full transition-all duration-300',
                     i === currentIndex
                       ? 'bg-lime w-8'
-                      : 'bg-navy/20 hover:bg-navy/40'
+                      : 'bg-navy/20 hover:bg-navy/40 w-2.5'
                   )}
                   role="tab"
                   aria-selected={i === currentIndex}
@@ -248,7 +267,7 @@ export function PeopleCarousel({
           >
             <Link
               href={ctaLink}
-              className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime transition-colors"
+              className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime-deep transition-colors"
             >
               {ctaText}
               <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />

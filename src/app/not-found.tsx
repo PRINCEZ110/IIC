@@ -10,14 +10,14 @@ export default function NotFound() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24 min-h-[60vh] flex items-center justify-center">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32 min-h-[60vh] flex items-center justify-center">
         <div className="container text-center py-16 md:py-24">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
           >
-            <div className="text-8xl md:text-12xl font-display font-extrabold text-lime mb-6" aria-hidden="true">
+            <div className="text-8xl md:text-9xl font-display font-extrabold text-lime-deep mb-6" aria-hidden="true">
               404
             </div>
             <h1 className="font-display font-extrabold text-navy text-3xl md:text-5xl lg:text-6xl mb-4">
@@ -31,9 +31,9 @@ export default function NotFound() {
                 <Home className="w-5 h-5" aria-hidden="true" />
                 Back to Home
               </Link>
-              <Link href="/search" className="inline-flex items-center gap-2 border-2 border-navy text-navy px-8 py-3 font-medium hover:bg-navy/5 transition-colors group">
+              <Link href="/study/courses" className="inline-flex items-center gap-2 border-2 border-navy text-navy px-8 py-3 font-medium hover:bg-navy/5 transition-colors group">
                 <Search className="w-5 h-5" aria-hidden="true" />
-                Search Site
+                Browse Courses
               </Link>
             </div>
           </motion.div>
@@ -48,14 +48,14 @@ export default function NotFound() {
               { label: 'Study at IIC', href: '/study', icon: Home },
               { label: 'Latest News', href: '/news', icon: Search },
               { label: 'Contact Us', href: '/contact', icon: ArrowLeft },
-            ].map((item, index) => (
+            ].map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
                 className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full text-center"
               >
-                <item.icon className="w-8 h-8 text-lime mx-auto mb-4 transition-transform group-hover:scale-110" aria-hidden="true" />
-                <h3 className="font-display font-bold text-navy text-lg group-hover:text-lime transition-colors">{item.label}</h3>
+                <item.icon className="w-8 h-8 text-lime-deep mx-auto mb-4 transition-transform group-hover:scale-110" aria-hidden="true" />
+                <h3 className="font-display font-bold text-navy text-lg group-hover:text-lime-deep transition-colors">{item.label}</h3>
               </Link>
             ))}
           </motion.div>

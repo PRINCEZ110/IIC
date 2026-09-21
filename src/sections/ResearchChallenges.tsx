@@ -2,10 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { useReducedMotion, useIntersectionObserver } from '@/hooks/useMediaQuery';
-import { cn } from '@/lib/utils';
 import { researchThemes } from '@/data/university';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 interface ResearchChallengesProps {
   title?: string;
@@ -64,11 +64,13 @@ export function ResearchChallenges({ title, subtitle }: ResearchChallengesProps)
             >
               <Link href={theme.href} className="block h-full">
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent z-10" aria-hidden="true" />
-                <img
-                  src={theme.image}
-                  alt=""
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
+                <Image
+                src={theme.image}
+                alt={theme.title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 1024px) 100vw, 33vw"
+              />
                 <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-20">
                   <div className="mb-4">
                     <span className="px-3 py-1 bg-lime text-navy text-xs font-bold uppercase tracking-wider">

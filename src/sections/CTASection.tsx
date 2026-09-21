@@ -5,6 +5,7 @@ import { useReducedMotion } from '@/hooks/useMediaQuery';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface CTASectionProps {
   title: string;
@@ -37,24 +38,44 @@ export function CTASection({
     gradient: 'bg-gradient-to-br from-navy via-bright-blue to-deep-blue text-white relative overflow-hidden',
   };
 
-  const getButtonVariant = (variant: string, isPrimary: boolean) => {
-    if (variant === 'white') return isPrimary ? 'primary' : 'outline';
-    if (variant === 'lime') return isPrimary ? 'primary' : 'secondary';
+  const getButtonVariant = (v: string, isPrimary: boolean) => {
+    if (v === 'white') return isPrimary ? 'primary' : 'outline';
+    if (v === 'lime') return isPrimary ? 'primary' : 'secondary';
     return isPrimary ? 'lime' : 'outline';
   };
 
+  // Description text colour: on dark backgrounds use near-white, on lime use navy/70
+  const descriptionColor =
+    variant === 'lime'
+      ? 'rgba(8,11,61,0.75)'
+      : variant === 'white'
+      ? 'var(--color-dark-grey)'
+      : 'rgba(255,255,255,0.9)';
+
   return (
-    <section className={cn('relative overflow-hidden py-16 md:py-24 lg:py-32', variants[variant], className)} aria-labelledby="cta-heading">
+    <section
+      className={cn('relative overflow-hidden py-16 md:py-24 lg:py-32', variants[variant], className)}
+      aria-labelledby="cta-heading"
+    >
       {variant === 'gradient' && (
         <>
           <div className="absolute inset-0 gradient-mesh" aria-hidden="true" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-lime/10 via-transparent to-transparent" aria-hidden="true" />
+          <div
+            className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-lime/10 via-transparent to-transparent"
+            aria-hidden="true"
+          />
         </>
       )}
 
       {image && (
         <div className="absolute inset-0 -z-10 opacity-10" aria-hidden="true">
-          <img src={image} alt="" className="w-full h-full object-cover" />
+          <Image
+                src={image}
+                alt={imageAlt ?? ''}
+                fill
+                className="object-cover"
+                sizes="100vw"
+              />
         </div>
       )}
 
@@ -70,7 +91,10 @@ export function CTASection({
             {title}
           </h2>
           {description && (
-            <p className="text-lg md:text-xl leading-relaxed mb-8 md:mb-10" style={{ color: variant === 'white' ? 'var(--color-dark-grey)' : 'rgba(255,255,255,0.9)' }}>
+            <p
+              className="text-lg md:text-xl leading-relaxed mb-8 md:mb-10"
+              style={{ color: descriptionColor }}
+            >
               {description}
             </p>
           )}

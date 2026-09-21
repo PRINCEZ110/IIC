@@ -50,9 +50,6 @@ export const metadata: Metadata = {
     description: 'Nepal\'s premier institution for IT and Computer Science education',
     images: ['/og-image.jpg'],
   },
-  verification: {
-    google: 'google-site-verification-code',
-  },
 };
 
 export const viewport: Viewport = {

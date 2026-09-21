@@ -42,12 +42,12 @@ export default function ImpactPageClient() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Research\nImpact"
           subheadline="Our research makes a measurable difference to society, industry, and the environment. Real solutions for real-world challenges."
           primaryCta={{ text: 'Read Impact Stories', href: '#stories' }}
-          secondaryCta={{ text: 'Collaborate', href: '/collaborate/research' }}
+          secondaryCta={{ text: 'Collaborate', href: '/collaborate' }}
           image="/images/impact-hero.jpg"
           imageAlt="Research impact"
           variant="research"
@@ -98,7 +98,7 @@ export default function ImpactPageClient() {
                     </div>
                     <div className="space-y-6">
                       <div>
-                        <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">The Challenge</h3>
+                        <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">The Challenge</h3>
                         <p className="text-dark-grey">{story.problem}</p>
                       </div>
                       <div>
@@ -110,7 +110,7 @@ export default function ImpactPageClient() {
                         <p className="text-dark-grey mb-4">{story.impact}</p>
                         <div className="flex flex-wrap gap-3">
                           {story.metrics.map((metric, i) => (
-                            <span key={i} className="px-3 py-1 bg-lime/10 text-lime text-xs font-bold uppercase tracking-wider">{metric}</span>
+                            <span key={i} className="px-3 py-1 bg-lime/10 text-lime-deep text-xs font-bold uppercase tracking-wider">{metric}</span>
                           ))}
                         </div>
                       </div>
@@ -161,8 +161,8 @@ export default function ImpactPageClient() {
         <CTASection
           title="Create Impact Together"
           description="Partner with our researchers to solve real-world challenges. From joint projects to funded PhDs, there are many ways to collaborate."
-          primaryCta={{ text: 'Explore Collaboration', href: '/collaborate/research' }}
-          secondaryCta={{ text: 'Contact Research Office', href: '/research/contact' }}
+          primaryCta={{ text: 'Explore Collaboration', href: '/collaborate' }}
+          secondaryCta={{ text: 'Contact Research Office', href: '/contact' }}
           variant="lime"
         />
       </main>

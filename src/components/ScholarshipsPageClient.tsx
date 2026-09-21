@@ -5,8 +5,6 @@ import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { Hero } from '@/sections/Hero';
 import { CTASection } from '@/sections/CTASection';
-import { stats } from '@/data/university';
-import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 
 export default function ScholarshipsPageClient() {
@@ -64,7 +62,7 @@ export default function ScholarshipsPageClient() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Scholarships\n& Funding"
           subheadline="We believe talent should never be limited by financial circumstances. Explore our range of scholarships, bursaries, and funding options."
@@ -104,18 +102,18 @@ export default function ScholarshipsPageClient() {
                   >
                     <div className="flex items-center justify-between mb-4">
                       <span className="px-3 py-1 bg-lime text-navy text-xs font-bold uppercase tracking-wider">{scholarship.type}</span>
-                      <span className="font-display font-bold text-lime text-2xl">{scholarship.value}</span>
+                      <span className="font-display font-bold text-lime-deep text-2xl">{scholarship.value}</span>
                     </div>
-                    <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{scholarship.name}</h3>
+                    <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{scholarship.name}</h3>
                     <p className="text-dark-grey text-sm mb-4 flex-1">{scholarship.description}</p>
                     <div className="space-y-2 text-sm text-medium-grey mb-4 border-t border-light-grey pt-4">
                       <p><span className="font-medium text-navy">Eligibility:</span> {scholarship.eligibility}</p>
                       <p><span className="font-medium text-navy">Deadline:</span> {scholarship.deadline}</p>
                     </div>
-                    <a href="/admissions/apply" className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime transition-colors mt-auto group">
+                    <Link href="/admissions/apply" className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime-deep transition-colors mt-auto group">
                       Apply Now
-                      <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                    </a>
+                      <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </Link>
                   </motion.article>
                 ))}
               </div>
@@ -139,10 +137,10 @@ export default function ScholarshipsPageClient() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
-                  { icon: '🏦', title: 'Student Loans', desc: 'Government-backed student loans with favorable terms. Available through partner banks with IIC endorsement.', link: '/admissions/loans' },
-                  { icon: '💼', title: 'Employer Sponsorship', desc: 'Many employers sponsor employees for upskilling. We provide documentation and invoicing support.', link: '/admissions/employer-sponsorship' },
-                  { icon: '💳', title: 'Payment Plans', desc: 'Flexible installment options to spread tuition fees across the academic year. Interest-free.', link: '/admissions/payment-plans' },
-                  { icon: '🌍', title: 'External Scholarships', desc: 'We support applications for external funding from governments, NGOs, and international organizations.', link: '/admissions/external-funding' },
+                  { icon: '🏦', title: 'Student Loans', desc: 'Government-backed student loans with favorable terms. Available through partner banks with IIC endorsement.', link: '/contact' },
+                  { icon: '💼', title: 'Employer Sponsorship', desc: 'Many employers sponsor employees for upskilling. We provide documentation and invoicing support.', link: '/contact' },
+                  { icon: '💳', title: 'Payment Plans', desc: 'Flexible installment options to spread tuition fees across the academic year. Interest-free.', link: '/contact' },
+                  { icon: '🌍', title: 'External Scholarships', desc: 'We support applications for external funding from governments, NGOs, and international organizations.', link: '/contact' },
                 ].map((item, index) => (
                   <motion.article
                     key={index}
@@ -153,9 +151,9 @@ export default function ScholarshipsPageClient() {
                     className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full text-center"
                   >
                     <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                    <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h3>
+                    <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                     <p className="text-dark-grey text-sm mb-4 flex-1">{item.desc}</p>
-                    <a href={item.link} className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime transition-colors group">
+                    <a href={item.link} className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime-deep transition-colors group">
                       Learn More
                       <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                     </a>
@@ -170,7 +168,7 @@ export default function ScholarshipsPageClient() {
           title="Need Help with Funding?"
           description="Our financial aid team can help you explore all available options and guide you through the application process."
           primaryCta={{ text: 'Contact Financial Aid', href: '/contact' }}
-          secondaryCta={{ text: 'Book a Consultation', href: '/admissions/consultation' }}
+          secondaryCta={{ text: 'Book a Consultation', href: '/contact' }}
           variant="lime"
         />
       </main>

@@ -7,6 +7,7 @@ import { Hero } from '@/sections/Hero';
 import { CTASection } from '@/sections/CTASection';
 import { researchers } from '@/data/university';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function DataSciencePageClient() {
   const themeResearchers = researchers.filter(r => r.department === 'Data Science');
@@ -14,12 +15,12 @@ export default function DataSciencePageClient() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Data Science\n& Analytics"
           subheadline="Transforming Data into Knowledge. Big data analytics, predictive modelling, and data visualisation for social good and scientific discovery."
           primaryCta={{ text: 'View Researchers', href: '/research/researchers?dept=data' }}
-          secondaryCta={{ text: 'Collaborate', href: '/collaborate/research' }}
+          secondaryCta={{ text: 'Collaborate', href: '/collaborate' }}
           image="/images/research-data-hero.jpg"
           imageAlt="Data science research at IIC"
           variant="research"
@@ -63,7 +64,7 @@ export default function DataSciencePageClient() {
                     className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full"
                   >
                     <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                    <h4 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h4>
+                    <h4 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h4>
                     <p className="text-dark-grey">{item.desc}</p>
                   </motion.article>
                 ))}
@@ -103,15 +104,17 @@ export default function DataSciencePageClient() {
                   >
                     <Link href={`/research/researchers/${researcher.id}`} className="block">
                       <div className="relative aspect-square overflow-hidden bg-light-grey">
-                        <img
-                          src={researcher.image}
-                          alt=""
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
+                        <Image
+                src={researcher.image}
+                alt={researcher.name}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+              />
                       </div>
                       <div className="p-5">
-                        <h4 className="font-display font-bold text-navy text-lg mb-1 group-hover:text-lime transition-colors">{researcher.name}</h4>
-                        <p className="text-lime text-sm font-medium mb-1">{researcher.title}</p>
+                        <h4 className="font-display font-bold text-navy text-lg mb-1 group-hover:text-lime-deep transition-colors">{researcher.name}</h4>
+                        <p className="text-lime-deep text-sm font-medium mb-1">{researcher.title}</p>
                         <p className="text-dark-grey text-sm line-clamp-2">{researcher.bio}</p>
                       </div>
                     </Link>
@@ -125,7 +128,7 @@ export default function DataSciencePageClient() {
         <CTASection
           title="Unlock the Power of Your Data"
           description="Partner with our data scientists on analytics projects, predictive modelling, or data strategy consulting."
-          primaryCta={{ text: 'Collaborate with Us', href: '/collaborate/research' }}
+          primaryCta={{ text: 'Collaborate with Us', href: '/collaborate' }}
           secondaryCta={{ text: 'View All Researchers', href: '/research/researchers' }}
           variant="lime"
         />

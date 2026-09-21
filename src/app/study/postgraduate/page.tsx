@@ -7,6 +7,7 @@ import { CTASection } from '@/sections/CTASection';
 import { ExploreLinks } from '@/sections/ExploreLinks';
 import { courses } from '@/data/university';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Postgraduate Taught Study',
@@ -19,7 +20,7 @@ export default function PostgraduatePage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Postgraduate\nTaught Study"
           subheadline="Advance your expertise with our specialised master's programmes. Designed for graduates and professionals ready to lead in technology."
@@ -44,7 +45,7 @@ export default function PostgraduatePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8" role="list">
-              {pgCourses.map((course, index) => (
+              {pgCourses.map((course) => (
                 <article
                   key={course.id}
                   className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col"
@@ -52,10 +53,12 @@ export default function PostgraduatePage() {
                 >
                   <Link href={`/study/courses/${course.id}`} className="relative aspect-video overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
-                    <img
+                    <Image
                       src={`/images/course-${course.id}.jpg`}
-                      alt=""
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      alt={course.name}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                     />
                     <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
                       <h3 className="font-display font-bold text-xl mb-2">{course.name}</h3>
@@ -65,15 +68,15 @@ export default function PostgraduatePage() {
                   <div className="p-5 flex-1 flex flex-col">
                     <div className="flex items-center gap-2 mb-3">
                       <span className="px-2 py-0.5 bg-blue-500/10 text-blue-500 text-xs font-medium">{course.subject}</span>
-                      <span className="px-2 py-0.5 bg-lime/10 text-lime text-xs font-medium">{course.qualification}</span>
+                      <span className="px-2 py-0.5 bg-lime/10 text-lime-deep text-xs font-medium">{course.qualification}</span>
                     </div>
-                    <h3 className="font-display font-bold text-navy text-lg mb-2 group-hover:text-lime transition-colors">
+                    <h3 className="font-display font-bold text-navy text-lg mb-2 group-hover:text-lime-deep transition-colors">
                       <Link href={`/study/courses/${course.id}`}>{course.name}</Link>
                     </h3>
                     <p className="text-dark-grey text-sm mb-4 flex-1 line-clamp-2">{course.description}</p>
                     <Link
                       href={`/study/courses/${course.id}`}
-                      className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime transition-colors mt-auto group"
+                      className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime-deep transition-colors mt-auto group"
                     >
                       View Course
                       <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -121,7 +124,7 @@ export default function PostgraduatePage() {
                   className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full"
                 >
                   <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h3>
+                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                   <p className="text-dark-grey">{item.description}</p>
                 </article>
               ))}

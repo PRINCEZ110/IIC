@@ -28,12 +28,12 @@ export default function AlumniPage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Global Alumni\nNetwork"
           subheadline="3,000+ graduates working at leading technology companies worldwide. Your IIC connection lasts a lifetime."
-          primaryCta={{ text: 'Read Alumni Stories', href: '/alumni/stories' }}
-          secondaryCta={{ text: 'Find Alumni', href: '/alumni/directory' }}
+          primaryCta={{ text: 'Read Alumni Stories', href: '/alumni' }}
+          secondaryCta={{ text: 'Find Alumni', href: '/alumni' }}
           image="/images/alumni-hero.jpg"
           imageAlt="IIC alumni"
           variant="life"
@@ -93,7 +93,7 @@ export default function AlumniPage() {
                   className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full text-center"
                 >
                   <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h3>
+                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                   <p className="text-dark-grey text-sm">{item.desc}</p>
                 </article>
               ))}
@@ -114,9 +114,9 @@ export default function AlumniPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {[
-                { icon: '🎓', title: 'Scholarship Funds', desc: 'Fund a student&apos;s education. Named scholarships from Rs. 500,000/year.', link: '/alumni/scholarships' },
-                { icon: '🔬', title: 'Research Support', desc: 'Enable cutting-edge research. Equipment, PhD studentships, project funding.', link: '/alumni/research-funding' },
-                { icon: '🏛️', title: 'Legacy Giving', desc: 'Leave a lasting impact through your will. Estate planning guidance available.', link: '/alumni/legacy' },
+                { icon: '🎓', title: 'Scholarship Funds', desc: 'Fund a student&apos;s education. Named scholarships from Rs. 500,000/year.', link: '/alumni' },
+                { icon: '🔬', title: 'Research Support', desc: 'Enable cutting-edge research. Equipment, PhD studentships, project funding.', link: '/alumni' },
+                { icon: '🏛️', title: 'Legacy Giving', desc: 'Leave a lasting impact through your will. Estate planning guidance available.', link: '/alumni' },
               ].map((item, index) => (
                 <article
                   key={index}
@@ -138,7 +138,7 @@ export default function AlumniPage() {
         <CTASection
           title="Stay Connected"
           description="Update your details, join our LinkedIn group, or attend the next reunion."
-          primaryCta={{ text: 'Update Your Details', href: '/alumni/update' }}
+          primaryCta={{ text: 'Update Your Details', href: '/alumni' }}
           secondaryCta={{ text: 'Join LinkedIn Group', href: 'https://linkedin.com/groups/iic-alumni' }}
           variant="blue"
         />
@@ -148,22 +148,22 @@ export default function AlumniPage() {
           links={[
             {
               label: 'Alumni Events Calendar',
-              href: '/alumni/events',
+              href: '/alumni',
               description: 'Reunions, networking, and professional development events.',
             },
             {
               label: 'Volunteer Opportunities',
-              href: '/alumni/volunteer',
+              href: '/alumni',
               description: 'Mentor students, speak at events, serve on advisory boards.',
             },
             {
               label: 'Alumni Newsletter',
-              href: '/alumni/newsletter',
+              href: '/alumni',
               description: 'Monthly updates on alumni news, achievements, and events.',
             },
             {
               label: 'Contact Alumni Relations',
-              href: '/alumni/contact',
+              href: '/alumni',
               description: 'We\'re here to help you stay connected with IIC.',
             },
           ]}

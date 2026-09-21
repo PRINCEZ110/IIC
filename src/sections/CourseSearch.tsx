@@ -2,13 +2,22 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { Search, Filter, ChevronDown, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, X, ArrowRight, GraduationCap, BookOpen, Microscope, Sparkles } from 'lucide-react';
 import { useReducedMotion } from '@/hooks/useMediaQuery';
 import { cn } from '@/lib/utils';
 import { studyCategories } from '@/data/university';
-import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
+
+const popularKeywords = [
+  'BSc Computing',
+  'Software Engineering',
+  'Data Science',
+  'Cyber Security',
+  'Artificial Intelligence',
+  'MSc Computing',
+  'AWS Certification',
+];
 
 export function CourseSearch() {
   const reducedMotion = useReducedMotion();
@@ -24,7 +33,7 @@ export function CourseSearch() {
       const allCourses = studyCategories.flatMap(c => c.courses);
       const filtered = allCourses
         .filter(c => c.toLowerCase().includes(value.toLowerCase()))
-        .slice(0, 5);
+        .slice(0, 6);
       setSuggestions(filtered);
     } else {
       setSuggestions([]);
@@ -34,182 +43,222 @@ export function CourseSearch() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      router.push(`/study/courses?q=${encodeURIComponent(query)}`);
+      router.push(`/study/courses?q=${encodeURIComponent(query.trim())}`);
+    } else {
+      router.push('/study/courses');
     }
   };
 
-  const handleSuggestionClick = (suggestion: string) => {
-    setQuery(suggestion);
-    setShowSuggestions(false);
-    router.push(`/study/courses?q=${encodeURIComponent(suggestion)}`);
+  const handleKeywordClick = (kw: string) => {
+    setQuery(kw);
+    router.push(`/study/courses?q=${encodeURIComponent(kw)}`);
   };
 
-  const studyOptions = [
-    { label: 'Undergraduate', href: '/study/undergraduate', count: '12 programmes' },
-    { label: 'Postgraduate Taught', href: '/study/postgraduate', count: '8 programmes' },
-    { label: 'Postgraduate Research', href: '/study/research', count: '6 programmes' },
-    { label: 'Funded PhD Opportunities', href: '/study/research/funded', count: '15+ positions' },
-    { label: 'Short Courses', href: '/study/professional', count: '20+ courses' },
-    { label: 'Online Learning', href: '/study/online', count: 'Flexible options' },
-    { label: 'International Students', href: '/study/international', count: '25+ countries' },
-    { label: 'Apprenticeships', href: '/study/apprenticeships', count: 'Earn while you learn' },
+  const studyGateways = [
+    {
+      icon: GraduationCap,
+      level: 'Undergraduate',
+      tag: 'Bachelor Degrees (4 Years)',
+      desc: 'BSc Computing, Software Engineering, Data Science & Cyber Security.',
+      href: '/study/undergraduate',
+      count: '4 Degrees',
+      accent: 'border-b-4 border-b-lime',
+    },
+    {
+      icon: BookOpen,
+      level: 'Postgraduate Taught',
+      tag: 'Masters Degrees (2 Years)',
+      desc: 'MSc Computing, MSc Artificial Intelligence, Advanced Software & Data.',
+      href: '/study/postgraduate',
+      count: '4 Programmes',
+      accent: 'border-b-4 border-b-bright-blue',
+    },
+    {
+      icon: Microscope,
+      level: 'Postgraduate Research',
+      tag: 'MPhil & PhD Studies',
+      desc: 'Funded doctoral opportunities in AI/ML, green computing & cyber defense.',
+      href: '/study/research',
+      count: '6 Research Areas',
+      accent: 'border-b-4 border-b-navy',
+    },
+    {
+      icon: Sparkles,
+      level: 'Professional & Short Courses',
+      tag: 'Certifications & Bootcamps',
+      desc: 'Industry certifications: AWS, Full Stack, Python & Data Analytics.',
+      href: '/study/professional',
+      count: '20+ Courses',
+      accent: 'border-b-4 border-b-warm-accent',
+    },
   ];
 
   return (
-    <section className="relative py-16 md:py-24 lg:py-32 bg-off-white" aria-labelledby="course-search-heading">
+    <section id="find-course" className="relative py-16 md:py-24 bg-white" aria-labelledby="course-search-heading">
       <div className="container">
+        {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-          className="max-w-3xl mx-auto text-center mb-12 md:mb-16"
+          viewport={{ once: true, margin: '-80px' }}
+          transition={reducedMotion ? { duration: 0 } : { duration: 0.5 }}
+          className="max-w-3xl mx-auto text-center mb-10 md:mb-12"
         >
-          <h2 id="course-search-heading" className="font-display font-extrabold text-navy leading-tight text-3xl md:text-5xl lg:text-6xl mb-4">
-            Find a course for any direction
+          <span className="text-xs font-bold uppercase tracking-wider text-navy bg-lime px-3 py-1 mb-3 inline-block">
+            Course Finder
+          </span>
+          <h2 id="course-search-heading" className="font-display font-extrabold text-navy leading-tight text-3xl md:text-5xl lg:text-6xl mb-3">
+            Find Your Future at IIC
           </h2>
-          <p className="text-lg md:text-xl text-dark-grey leading-relaxed">
-            Discover the course that could shape your future. Search by subject, level, or keyword.
+          <p className="text-lg text-dark-grey leading-relaxed">
+            Search our industry-aligned undergraduate degrees, postgraduate qualifications, and research opportunities.
           </p>
         </motion.div>
 
-        <motion.form
-          onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 30 }}
+        {/* Central Search Form (Hull benchmark) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1], delay: 0.1 }}
-          className="relative max-w-4xl mx-auto mb-12 md:mb-16"
+          viewport={{ once: true }}
+          transition={reducedMotion ? { duration: 0 } : { duration: 0.5, delay: 0.1 }}
+          className="max-w-4xl mx-auto mb-8"
         >
-          <label htmlFor="course-search" className="sr-only">
-            Search for a course or subject
-          </label>
-          <div className="relative">
-            <div className="relative">
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-navy/40 text-2xl" aria-hidden="true" />
-              <input
-                id="course-search"
-                type="search"
-                value={query}
-                onChange={e => handleInputChange(e.target.value)}
-                onFocus={() => setShowSuggestions(true)}
-                onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                placeholder="Search for a course or subject..."
-                className="w-full bg-white border-2 border-light-grey focus:border-lime focus:ring-2 focus:ring-lime/20 text-navy text-lg md:text-xl py-5 pl-14 pr-16 transition-all duration-200"
-                autoComplete="off"
-                aria-autocomplete="list"
-                aria-controls="course-suggestions"
-                aria-expanded={showSuggestions && suggestions.length > 0}
-              />
-              {query && (
-                <button
-                  type="button"
-                  onClick={() => setQuery('')}
-                  className="absolute right-5 top-1/2 -translate-y-1/2 text-navy/40 hover:text-lime transition-colors p-1"
-                  aria-label="Clear search"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              )}
+          <form onSubmit={handleSubmit} className="relative bg-white shadow-2xl border-2 border-navy">
+            <div className="flex flex-col md:flex-row items-stretch">
+              {/* Input Field */}
+              <div className="relative flex-1">
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-navy/40 w-6 h-6" aria-hidden="true" />
+                <input
+                  id="course-search"
+                  type="search"
+                  role="combobox"
+                  aria-expanded={showSuggestions && suggestions.length > 0}
+                  aria-controls="course-suggestions"
+                  value={query}
+                  onChange={e => handleInputChange(e.target.value)}
+                  onFocus={() => setShowSuggestions(true)}
+                  onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                  placeholder="Search by subject, degree (e.g. Data Science, BSc, AI)..."
+                  className="w-full bg-white text-navy font-medium text-base md:text-lg py-5 pl-14 pr-12 focus:outline-none focus:ring-0 placeholder:text-medium-grey/70"
+                  autoComplete="off"
+                  aria-label="Search courses"
+                />
+                {query && (
+                  <button
+                    type="button"
+                    onClick={() => setQuery('')}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-navy/40 hover:text-navy p-1"
+                    aria-label="Clear search"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="bg-navy hover:bg-navy-light text-white font-display font-bold text-base md:text-lg px-8 py-4 flex items-center justify-center gap-2 transition-colors duration-150 flex-shrink-0"
+              >
+                <span>Find Courses</span>
+                <ArrowRight className="w-5 h-5 text-lime" />
+              </button>
             </div>
 
+            {/* Suggestions Dropdown */}
             <AnimatePresence>
               {showSuggestions && suggestions.length > 0 && (
                 <motion.ul
                   id="course-suggestions"
-                  initial={{ opacity: 0, y: -10 }}
+                  initial={{ opacity: 0, y: -5 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={reducedMotion ? { duration: 0 } : { duration: 0.2 }}
-                  className="absolute top-full left-0 right-0 mt-2 bg-white border border-light-grey shadow-xl rounded-none overflow-hidden z-50 max-h-60 overflow-y-auto"
+                  exit={{ opacity: 0, y: -5 }}
+                  className="absolute top-full left-0 right-0 bg-white border border-light-grey shadow-xl z-50 divide-y divide-light-grey"
                   role="listbox"
                 >
-                  {suggestions.map((suggestion, index) => (
-                    <motion.li
-                      key={suggestion}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.03 }}
-                    >
+                  {suggestions.map((sug) => (
+                    <li key={sug}>
                       <button
                         type="button"
-                        onClick={() => handleSuggestionClick(suggestion)}
-                        className="w-full px-5 py-3 text-left text-navy hover:bg-lime/10 hover:text-lime transition-colors flex items-center gap-3"
-                        role="option"
-                        aria-selected={false}
+                        onClick={() => handleKeywordClick(sug)}
+                        className="w-full px-5 py-3.5 text-left text-navy hover:bg-lime/10 hover:text-bright-blue font-medium flex items-center gap-3 transition-colors text-sm md:text-base"
                       >
-                        <Search className="w-5 h-5 text-navy/40" aria-hidden="true" />
-                        <span>{suggestion}</span>
+                        <Search className="w-4 h-4 text-navy/40" />
+                        <span>{sug}</span>
                       </button>
-                    </motion.li>
+                    </li>
                   ))}
                 </motion.ul>
               )}
             </AnimatePresence>
-          </div>
+          </form>
 
-          <button
-            type="submit"
-            className="absolute right-2 top-2 bottom-2 bg-navy text-white px-6 font-medium hover:bg-navy-light transition-colors hidden md:block"
-            aria-label="Search"
-          >
-            Search
-          </button>
-        </motion.form>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto"
-          role="list"
-          aria-label="Study options"
-        >
-          {studyOptions.map((option, index) => (
-            <motion.article
-              key={option.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 + index * 0.05, duration: 0.4 }}
-              className="group relative bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 overflow-hidden"
-              role="listitem"
-            >
-              <Link
-                href={option.href}
-                className="block p-6 h-full flex flex-col"
+          {/* Popular Search Pills */}
+          <div className="flex flex-wrap items-center gap-2 mt-4 text-xs">
+            <span className="font-bold text-navy uppercase tracking-wider">Popular searches:</span>
+            {popularKeywords.map((kw) => (
+              <button
+                key={kw}
+                type="button"
+                onClick={() => handleKeywordClick(kw)}
+                className="px-2.5 py-1 bg-off-white hover:bg-lime text-navy font-semibold border border-light-grey transition-colors"
               >
-                <div className="flex items-start justify-between mb-3">
-                  <span className="text-lime font-display font-bold text-2xl">0{index + 1}</span>
-                  <Filter className="w-5 h-5 text-navy/30 group-hover:text-lime transition-colors" aria-hidden="true" />
-                </div>
-                <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">
-                  {option.label}
-                </h3>
-                <p className="text-medium-grey text-sm mb-4 flex-1">{option.count}</p>
-                <Button variant="ghost" size="sm" arrow fullWidth className="mt-auto">
-                  Explore
-                </Button>
-              </Link>
-            </motion.article>
-          ))}
+                {kw}
+              </button>
+            ))}
+          </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1], delay: 0.5 }}
-          className="mt-12 md:mt-16 text-center"
-        >
-          <Button variant="outline" size="lg" arrow asChild>
-            <Link href="/study/courses">Browse All Courses</Link>
-          </Button>
-        </motion.div>
+        {/* 4 Study Level Gateway Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto mt-12">
+          {studyGateways.map((gw, idx) => {
+            const Icon = gw.icon;
+            return (
+              <motion.div
+                key={gw.level}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={reducedMotion ? { duration: 0 } : { duration: 0.4, delay: 0.15 + idx * 0.08 }}
+              >
+                <Link
+                  href={gw.href}
+                  className={cn(
+                    'group block h-full p-6 bg-off-white hover:bg-white hover:shadow-xl transition-all duration-300 border border-light-grey flex flex-col justify-between',
+                    gw.accent
+                  )}
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-navy text-lime flex items-center justify-center group-hover:bg-lime group-hover:text-navy transition-colors">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <span className="text-xs font-bold text-medium-grey">
+                        {gw.count}
+                      </span>
+                    </div>
+
+                    <h3 className="font-display font-bold text-navy text-xl mb-1 group-hover:text-bright-blue transition-colors">
+                      {gw.level}
+                    </h3>
+                    <p className="text-xs font-semibold text-bright-blue mb-2.5">
+                      {gw.tag}
+                    </p>
+                    <p className="text-dark-grey text-xs md:text-sm leading-relaxed mb-6">
+                      {gw.desc}
+                    </p>
+                  </div>
+
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-navy group-hover:text-bright-blue transition-colors mt-auto">
+                    Explore Programmes
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </Link>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 }
-
-import { AnimatePresence } from 'framer-motion';

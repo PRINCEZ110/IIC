@@ -2,10 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '@/hooks/useMediaQuery';
-import { cn } from '@/lib/utils';
 import { studyCategories } from '@/data/university';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 interface StudyOptionsProps {
   title?: string;
@@ -60,11 +60,13 @@ export function StudyOptions({ title, subtitle }: StudyOptionsProps) {
             >
               <Link href={category.href} className="relative block aspect-[4/3] overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
-                <img
-                  src={category.image}
-                  alt=""
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                <Image
+                src={category.image}
+                alt={category.title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+              />
                 <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6 text-white">
                   <span className="px-3 py-1 bg-lime text-navy text-xs font-bold uppercase tracking-wider mb-3 inline-block">
                     {category.courses.length} programmes
@@ -83,13 +85,13 @@ export function StudyOptions({ title, subtitle }: StudyOptionsProps) {
                     </li>
                   ))}
                   {category.courses.length > 3 && (
-                    <li className="text-lime text-sm font-medium">+{category.courses.length - 3} more</li>
+                    <li className="text-lime-deep text-sm font-medium">+{category.courses.length - 3} more</li>
                   )}
                 </ul>
 
                 <Link
                   href={category.href}
-                  className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime transition-colors mt-auto group"
+                  className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime-deep transition-colors mt-auto group"
                 >
                   {category.cta}
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
@@ -108,7 +110,7 @@ export function StudyOptions({ title, subtitle }: StudyOptionsProps) {
         >
           <Link
             href="/study/courses"
-            className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime transition-colors text-lg"
+            className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime-deep transition-colors text-lg"
           >
             View All Courses
             <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />

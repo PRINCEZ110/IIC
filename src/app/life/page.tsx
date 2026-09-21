@@ -6,6 +6,7 @@ import { CTASection } from '@/sections/CTASection';
 import { ExploreLinks } from '@/sections/ExploreLinks';
 import { lifeCategories } from '@/data/university';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Life at IIC',
@@ -16,7 +17,7 @@ export default function LifePage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Life at IIC"
           subheadline="Your university experience goes far beyond the classroom. Discover a vibrant community, world-class facilities, and the excitement of living in Kathmandu."
@@ -39,7 +40,7 @@ export default function LifePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" role="list">
-              {lifeCategories.map((category, index) => (
+              {lifeCategories.map((category) => (
                 <article
                   key={category.id}
                   className="group relative overflow-hidden bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 h-full"
@@ -47,15 +48,17 @@ export default function LifePage() {
                 >
                   <Link href={category.href} className="block h-full">
                     <div className="relative aspect-[4/3] overflow-hidden">
-                      <img
-                        src={category.image}
-                        alt=""
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
+                      <Image
+                src={category.image}
+                alt={category.title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+              />
                       <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
                     </div>
                     <div className="p-5">
-                      <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">
+                      <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">
                         {category.title}
                       </h3>
                       <p className="text-dark-grey text-sm">{category.description}</p>
@@ -91,7 +94,7 @@ export default function LifePage() {
                   className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 text-center"
                 >
                   <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h3>
+                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                   <p className="text-dark-grey">{item.desc}</p>
                 </article>
               ))}
@@ -112,22 +115,22 @@ export default function LifePage() {
           links={[
             {
               label: 'International Student Support',
-              href: '/life/international-support',
+              href: '/study/international',
               description: 'Visa guidance, orientation programmes, and cultural integration.',
             },
             {
               label: 'Disability & Accessibility',
-              href: '/life/accessibility',
+              href: '/accessibility',
               description: 'Inclusive learning environments and tailored support.',
             },
             {
               label: 'Student Voices',
-              href: '/life/student-voices',
+              href: '/life',
               description: 'Hear directly from current students about their IIC experience.',
             },
             {
               label: 'Parents & Guardians',
-              href: '/life/parents',
+              href: '/life',
               description: 'Information for families supporting students at IIC.',
             },
           ]}

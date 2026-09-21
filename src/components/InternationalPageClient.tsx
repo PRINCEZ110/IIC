@@ -5,18 +5,17 @@ import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { Hero } from '@/sections/Hero';
 import { CTASection } from '@/sections/CTASection';
-import { lifeCategories } from '@/data/university';
 
 export default function InternationalPageClient() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="International\nStudents"
           subheadline="Join students from 25+ countries at Nepal's premier IT institute. Comprehensive support from application to graduation."
           primaryCta={{ text: 'Apply as International Student', href: '/admissions/apply' }}
-          secondaryCta={{ text: 'Download Guide', href: '/admissions/international-guide' }}
+          secondaryCta={{ text: 'Download Guide', href: '/study/international' }}
           image="/images/international-hero.jpg"
           imageAlt="International students at IIC"
           variant="page"
@@ -54,7 +53,7 @@ export default function InternationalPageClient() {
                     className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full text-center"
                   >
                     <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                    <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h3>
+                    <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                     <p className="text-dark-grey">{item.desc}</p>
                   </motion.article>
                 );
@@ -97,7 +96,7 @@ export default function InternationalPageClient() {
                     className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full"
                   >
                     <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                    <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h3>
+                    <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                     <p className="text-dark-grey">{item.desc}</p>
                   </motion.article>
                 );
@@ -136,9 +135,9 @@ export default function InternationalPageClient() {
                   >
                     <div className="flex items-center justify-between mb-4">
                       <span className="px-3 py-1 bg-lime text-navy text-xs font-bold uppercase tracking-wider">International</span>
-                      <span className="font-display font-bold text-lime text-2xl">{item.value}</span>
+                      <span className="font-display font-bold text-lime-deep text-2xl">{item.value}</span>
                     </div>
-                    <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.name}</h3>
+                    <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.name}</h3>
                     <p className="text-dark-grey text-sm mb-4 flex-1">{item.criteria}</p>
                     <div className="flex items-center justify-between text-sm text-medium-grey border-t border-light-grey pt-4">
                       <span>Deadline: <span className="font-medium text-navy">{item.deadline}</span></span>

@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Search, ChevronDown } from 'lucide-react';
+import { Menu, X, Search, ChevronDown,  Globe, Calendar, Phone,  BookOpen, Compass } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useReducedMotion, useScrollPosition } from '@/hooks/useMediaQuery';
 import { navigationItems, universityInfo } from '@/data/university';
@@ -18,24 +18,21 @@ export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(scrollY > 20);
-    };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [scrollY]);
+  const isScrolled = scrollY > 30;
 
   const handleMenuHover = (menu: string | null) => {
-    if (menu) {
-      setActiveMenu(menu);
-    } else {
-      setActiveMenu(null);
-    }
+    setActiveMenu(menu);
   };
+
+  // Lock background scroll while the mobile drawer is open
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isMobileMenuOpen]);
 
   const handleMouseLeave = () => {
     setActiveMenu(null);
@@ -48,76 +45,149 @@ export function Header() {
         className={cn(
           'fixed top-0 left-0 right-0 z-[500] transition-all duration-300',
           isScrolled
-            ? 'bg-white/95 backdrop-blur-md border-b border-light-grey shadow-sm'
-            : 'bg-transparent'
+            ? 'bg-white/98 backdrop-blur-md shadow-md border-b border-light-grey'
+            : 'bg-white border-b border-light-grey/80'
         )}
         onMouseLeave={handleMouseLeave}
       >
+        {/* Top Utility Bar (Hull benchmark: quick audience & action access) */}
+        <div className="hidden lg:block bg-navy text-white text-xs py-2 border-b border-white/10">
+          <div className="container flex items-center justify-between">
+            <div className="flex items-center gap-6 text-white/80">
+              <span className="flex items-center gap-1.5 font-medium text-lime">
+                <span className="w-2 h-2 rounded-full bg-lime animate-pulse" />
+                Admissions Open 2025/26
+              </span>
+              <span className="text-white/30">|</span>
+              <Link href="/visit/campus-tour" className="hover:text-lime transition-colors flex items-center gap-1">
+                <Calendar className="w-3.5 h-3.5" /> Book Open Day
+              </Link>
+              <Link href="/visit/virtual-tour" className="hover:text-lime transition-colors flex items-center gap-1">
+                <Compass className="w-3.5 h-3.5" /> Virtual 360° Tour
+              </Link>
+              <Link href="/study/international" className="hover:text-lime transition-colors flex items-center gap-1">
+                <Globe className="w-3.5 h-3.5" /> International Students
+              </Link>
+            </div>
+
+            <div className="flex items-center gap-5 text-white/80 font-medium">
+              <Link href="/life" className="hover:text-lime transition-colors">
+                Current Students
+              </Link>
+              <Link href="/alumni" className="hover:text-lime transition-colors">
+                Alumni
+              </Link>
+              <Link href="/collaborate" className="hover:text-lime transition-colors">
+                Business & Partners
+              </Link>
+              <Link href="/contact" className="hover:text-lime transition-colors flex items-center gap-1">
+                <Phone className="w-3 h-3" /> Contact
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Navigation Bar */}
         <nav className="container" aria-label="Main navigation">
-          <div className="flex items-center justify-between h-16 md:h-20 lg:h-24">
+          <div className="flex items-center justify-between h-20 md:h-22">
+            {/* University Logo */}
             <Link
               href="/"
-              className="flex items-center gap-3 flex-shrink-0 z-10"
+              className="flex items-center gap-3.5 flex-shrink-0 z-10 group"
               aria-label={`${universityInfo.name} - Home`}
             >
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-navy rounded-none flex items-center justify-center relative overflow-hidden">
-                <span className="text-white font-display font-extrabold text-xl md:text-2xl relative z-10">
+              <div className="w-12 h-12 md:w-14 md:h-14 bg-navy rounded-none flex items-center justify-center relative overflow-hidden shadow-sm group-hover:scale-[1.02] transition-transform">
+                <span className="text-white font-display font-black text-2xl tracking-tighter relative z-10">
                   IIC
                 </span>
-                <div className="absolute inset-0 bg-lime transform skew-x-12 -translate-x-1/2 left-1/2" aria-hidden="true" />
+                <div className="absolute inset-0 bg-lime transform skew-x-12 -translate-x-1/2 left-1/2 opacity-90" aria-hidden="true" />
               </div>
-              <span className="hidden md:block font-display font-bold text-navy text-lg leading-tight">
-                International Institute<br />
-                <span className="font-normal text-sm text-dark-grey">of Computer Science</span>
-              </span>
+              <div className="flex flex-col">
+                <span className="font-display font-extrabold text-navy text-lg md:text-xl leading-tight tracking-tight">
+                  International Institute
+                </span>
+                <span className="font-sans font-semibold text-xs tracking-wider uppercase text-medium-grey">
+                  of Computer Science
+                </span>
+              </div>
             </Link>
 
-            <div className="hidden lg:flex items-center gap-8">
+            {/* Desktop Navigation Links */}
+            <div className="hidden lg:flex items-center gap-6 xl:gap-8">
               {navigationItems.map((item) => (
                 <div
                   key={item.label}
-                  className="relative"
+                  className="relative py-6"
                   onMouseEnter={() => handleMenuHover(item.megaMenu || null)}
-                  onMouseLeave={handleMouseLeave}
+                  onFocus={() => handleMenuHover(item.megaMenu || null)}
                 >
-                  <button
+                  <Link
+                    href={item.href}
                     className={cn(
-                      'flex items-center gap-1.5 px-3 py-2 text-navy font-medium text-base',
-                      'hover:text-lime transition-colors duration-150',
-                      'relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-lime after:scale-x-0 after:origin-bottom-right',
-                      'hover:after:scale-x-100 hover:after:origin-bottom-left transition-transform duration-300'
+                      'flex items-center gap-1 font-semibold text-sm xl:text-base text-navy hover:text-bright-blue transition-colors duration-150 relative py-1',
+                      activeMenu === item.megaMenu && 'text-bright-blue'
                     )}
                     aria-haspopup="true"
                     aria-expanded={activeMenu === item.megaMenu}
-                    aria-controls={`mega-menu-${item.megaMenu}`}
+                    aria-controls={item.megaMenu ? `mega-menu-${item.megaMenu}` : undefined}
                   >
                     {item.label}
-                    {item.megaMenu && <ChevronDown className="w-4 h-4 text-navy/50 transition-transform" />}
-                  </button>
+                    {item.megaMenu && (
+                      <ChevronDown
+                        className={cn(
+                          'w-3.5 h-3.5 text-navy/50 transition-transform duration-200',
+                          activeMenu === item.megaMenu && 'rotate-180 text-bright-blue'
+                        )}
+                      />
+                    )}
+                    <span
+                      className={cn(
+                        'absolute bottom-0 left-0 w-full h-[2px] bg-lime transform scale-x-0 transition-transform duration-200 origin-left',
+                        activeMenu === item.megaMenu && 'scale-x-100'
+                      )}
+                    />
+                  </Link>
                 </div>
               ))}
+            </div>
 
+            {/* Action Buttons: Search & Apply */}
+            <div className="hidden lg:flex items-center gap-3">
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2 text-navy/60 hover:text-lime hover:bg-navy/5 rounded-none transition-colors"
+                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-navy hover:text-bright-blue hover:bg-off-white border border-light-grey rounded-none transition-colors"
+                aria-label="Search courses and website"
+              >
+                <Search className="w-4 h-4 text-navy/70" />
+                <span className="hidden xl:inline">Search</span>
+              </button>
+
+              <Button variant="primary" size="sm" arrow asChild className="font-semibold shadow-sm">
+                <Link href="/admissions/apply">Apply Now</Link>
+              </Button>
+            </div>
+
+            {/* Mobile Header Controls */}
+            <div className="flex items-center gap-2 lg:hidden">
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                className="p-2.5 text-navy hover:bg-off-white transition-colors"
                 aria-label="Search"
               >
                 <Search className="w-5 h-5" />
               </button>
-            </div>
 
-            <div className="flex items-center gap-4 lg:hidden">
-              <button
-                onClick={() => setIsSearchOpen(true)}
-                className="p-2 text-navy hover:text-lime"
-                aria-label="Search"
+              <Link
+                href="/admissions/apply"
+                className="bg-navy text-white text-xs font-bold px-3 py-2 hover:bg-navy-light transition-colors"
               >
-                <Search className="w-6 h-6" />
-              </button>
+                Apply
+              </Link>
+
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="p-2 text-navy hover:text-lime"
-                aria-label="Open menu"
+                className="p-2.5 text-navy hover:bg-off-white transition-colors"
+                aria-label="Open navigation menu"
                 aria-expanded={isMobileMenuOpen}
                 aria-controls="mobile-menu"
               >
@@ -127,47 +197,78 @@ export function Header() {
           </div>
         </nav>
 
+        {/* Desktop Mega Menu Dropdown */}
         <MegaMenu
           isOpen={!!activeMenu}
           activeMenu={activeMenu}
           onClose={() => setActiveMenu(null)}
-          onMenuChange={setActiveMenu}
         />
       </header>
 
+      {/* Global Search Overlay */}
       <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
+      {/* Mobile Navigation Drawer */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={reducedMotion ? { duration: 0 } : { duration: 0.2 }}
-            className="fixed inset-0 z-[400] bg-navy/95 backdrop-blur-sm lg:hidden"
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={reducedMotion ? { duration: 0 } : { duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            className="fixed inset-0 z-[600] bg-navy text-white lg:hidden overflow-y-auto"
             role="dialog"
             aria-modal="true"
-            aria-label="Mobile menu"
+            aria-label="Mobile navigation"
           >
-            <div className="flex h-full flex-col">
-              <div className="flex items-center justify-between p-4 border-b border-white/10">
-                <Link href="/" className="flex items-center gap-3" aria-label="IIC Home">
+            <div className="flex flex-col min-h-full">
+              {/* Mobile Drawer Header */}
+              <div className="flex items-center justify-between p-5 border-b border-white/10 bg-navy-light">
+                <Link
+                  href="/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-3"
+                  aria-label="IIC Home"
+                >
                   <div className="w-10 h-10 bg-navy rounded-none flex items-center justify-center relative overflow-hidden">
                     <span className="text-white font-display font-extrabold text-xl relative z-10">IIC</span>
                     <div className="absolute inset-0 bg-lime transform skew-x-12 -translate-x-1/2 left-1/2" aria-hidden="true" />
                   </div>
+                  <span className="font-display font-bold text-white text-base leading-tight">
+                    International Institute
+                  </span>
                 </Link>
+
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 text-white/70 hover:text-lime transition-colors"
+                  className="p-2 text-white/80 hover:text-lime transition-colors"
                   aria-label="Close menu"
                 >
                   <X className="w-7 h-7" />
                 </button>
               </div>
 
-              <nav className="flex-1 overflow-y-auto p-6 space-y-1" aria-label="Mobile navigation">
+              {/* Mobile Quick Action Strip */}
+              <div className="p-4 bg-navy-light/60 border-b border-white/10 grid grid-cols-2 gap-2">
+                <Link
+                  href="/study/courses"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 py-2.5 px-3 bg-white/10 hover:bg-lime hover:text-navy text-xs font-semibold text-white transition-colors"
+                >
+                  <BookOpen className="w-3.5 h-3.5" /> Find a Course
+                </Link>
+                <Link
+                  href="/admissions/apply"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 py-2.5 px-3 bg-lime text-navy hover:bg-lime-dark text-xs font-bold transition-colors"
+                >
+                  Apply for 2025/26
+                </Link>
+              </div>
+
+              {/* Mobile Nav Links */}
+              <nav className="flex-1 p-5 space-y-1" aria-label="Mobile main navigation">
                 {navigationItems.map((item) => (
                   <MobileMenuItem
                     key={item.label}
@@ -181,33 +282,52 @@ export function Header() {
                   />
                 ))}
 
-                <div className="pt-6 mt-6 border-t border-white/10 space-y-4">
-                  <button
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      setIsSearchOpen(true);
-                    }}
-                    className="w-full flex items-center gap-4 p-4 text-white hover:text-lime bg-white/5 transition-colors text-left"
-                  >
-                    <Search className="w-6 h-6" />
-                    <span className="text-lg font-medium">Search</span>
-                  </button>
+                {/* Mobile Quick Audience Links */}
+                <div className="pt-6 mt-6 border-t border-white/10 space-y-2">
+                  <span className="text-xs uppercase tracking-wider font-semibold text-white/40 px-3 block">
+                    Quick Links
+                  </span>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <Link
+                      href="/study/international"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="px-3 py-2 text-white/80 hover:text-lime transition-colors"
+                    >
+                      International Students
+                    </Link>
+                    <Link
+                      href="/admissions/scholarships"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="px-3 py-2 text-white/80 hover:text-lime transition-colors"
+                    >
+                      Scholarships & Funding
+                    </Link>
+                    <Link
+                      href="/visit/virtual-tour"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="px-3 py-2 text-white/80 hover:text-lime transition-colors"
+                    >
+                      360° Virtual Tour
+                    </Link>
+                    <Link
+                      href="/contact"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="px-3 py-2 text-white/80 hover:text-lime transition-colors"
+                    >
+                      Contact Admissions
+                    </Link>
+                  </div>
+                </div>
 
-                  <div className="flex items-center gap-4 pt-4">
-                    <a href={universityInfo.social.facebook} className="text-white/60 hover:text-lime transition-colors" aria-label="Facebook" target="_blank" rel="noopener">
-                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                {/* Mobile Social Links */}
+                <div className="pt-6 border-t border-white/10 flex items-center justify-between px-3 text-xs text-white/50">
+                  <span>{universityInfo.name}</span>
+                  <div className="flex items-center gap-4">
+                    <a href={universityInfo.social.facebook} className="text-white/60 hover:text-lime" target="_blank" rel="noopener" aria-label="Facebook">
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                     </a>
-                    <a href={universityInfo.social.twitter} className="text-white/60 hover:text-lime transition-colors" aria-label="Twitter" target="_blank" rel="noopener">
-                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
-                    </a>
-                    <a href={universityInfo.social.linkedin} className="text-white/60 hover:text-lime transition-colors" aria-label="LinkedIn" target="_blank" rel="noopener">
-                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                    </a>
-                    <a href={universityInfo.social.instagram} className="text-white/60 hover:text-lime transition-colors" aria-label="Instagram" target="_blank" rel="noopener">
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                    </a>
-                    <a href={universityInfo.social.youtube} className="text-white/60 hover:text-lime transition-colors" aria-label="YouTube" target="_blank" rel="noopener">
-                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.5.46 8.5.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                    <a href={universityInfo.social.linkedin} className="text-white/60 hover:text-lime" target="_blank" rel="noopener" aria-label="LinkedIn">
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
                     </a>
                   </div>
                 </div>
@@ -235,7 +355,7 @@ function MobileMenuItem({ item, isOpen, onToggle, onClose }: MobileMenuItemProps
       <Link
         href={item.href}
         onClick={onClose}
-        className="block px-4 py-4 text-white/80 hover:text-lime hover:bg-white/5 transition-colors font-medium"
+        className="block px-4 py-3.5 text-white/90 hover:text-lime hover:bg-white/5 transition-colors font-semibold text-lg border-b border-white/5"
       >
         {item.label}
       </Link>
@@ -243,23 +363,17 @@ function MobileMenuItem({ item, isOpen, onToggle, onClose }: MobileMenuItemProps
   }
 
   return (
-    <div className="border-b border-white/10">
+    <div className="border-b border-white/5">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-4 py-4 text-white/80 hover:text-lime transition-colors font-medium text-left"
+        className="w-full flex items-center justify-between px-4 py-3.5 text-white/90 hover:text-lime transition-colors font-semibold text-lg text-left"
         aria-expanded={isOpen}
         aria-controls={`mobile-submenu-${item.megaMenu}`}
       >
         <span>{item.label}</span>
-        <svg
-          className={cn('w-5 h-5 transition-transform', isOpen && 'rotate-180')}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+        <ChevronDown
+          className={cn('w-5 h-5 text-white/50 transition-transform duration-200', isOpen && 'rotate-180 text-lime')}
+        />
       </button>
 
       <AnimatePresence>
@@ -270,25 +384,25 @@ function MobileMenuItem({ item, isOpen, onToggle, onClose }: MobileMenuItemProps
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={reducedMotion ? { duration: 0 } : { duration: 0.2 }}
-            className="overflow-hidden bg-white/5"
+            className="overflow-hidden bg-white/5 pb-3"
           >
             <li>
               <Link
                 href={item.href}
                 onClick={onClose}
-                className="block px-8 py-3 text-lime font-semibold hover:text-white transition-colors border-l-2 border-l-lime pl-6"
+                className="block px-6 py-2.5 text-lime font-bold hover:text-white transition-colors text-sm border-l-2 border-lime pl-5 my-1"
               >
-                All {item.label}
+                Overview: {item.label} →
               </Link>
             </li>
-            <li className="px-4 py-2">
-              <nav className="grid grid-cols-2 gap-2" aria-label={`${item.label} submenu`}>
+            <li className="px-3 py-1">
+              <nav className="grid grid-cols-1 gap-1" aria-label={`${item.label} submenu`}>
                 {getMobileSubmenuItems(item.megaMenu).map((subItem) => (
                   <Link
                     key={subItem.href}
                     href={subItem.href}
                     onClick={onClose}
-                    className="block px-4 py-3 text-white/70 hover:text-lime hover:bg-white/5 transition-colors text-sm"
+                    className="block px-4 py-2 text-white/70 hover:text-lime hover:bg-white/5 transition-colors text-sm font-medium"
                   >
                     {subItem.label}
                   </Link>
@@ -305,74 +419,65 @@ function MobileMenuItem({ item, isOpen, onToggle, onClose }: MobileMenuItemProps
 function getMobileSubmenuItems(menu: string) {
   const items: Record<string, { label: string; href: string }[]> = {
     study: [
-      { label: 'Undergraduate Courses', href: '/study/undergraduate' },
-      { label: 'Postgraduate Taught', href: '/study/postgraduate' },
-      { label: 'Postgraduate Research', href: '/study/research' },
-      { label: 'Professional Courses', href: '/study/professional' },
-      { label: 'Course Search', href: '/study/courses' },
-      { label: 'Open Days', href: '/events?type=open-day' },
-      { label: 'International Students', href: '/study/international' },
+      { label: 'Undergraduate Courses (BSc)', href: '/study/undergraduate' },
+      { label: 'Postgraduate Taught (MSc)', href: '/study/postgraduate' },
+      { label: 'Postgraduate Research (MPhil & PhD)', href: '/study/research' },
+      { label: 'Professional & Short Courses', href: '/study/professional' },
+      { label: 'Browse All Programmes', href: '/study/courses' },
+      { label: 'Entry Requirements', href: '/admissions/requirements' },
+      { label: 'Scholarships & Funding', href: '/admissions/scholarships' },
+      { label: 'International Student Guide', href: '/study/international' },
       { label: 'How to Apply', href: '/admissions/apply' },
     ],
     life: [
-      { label: 'Campus Tour', href: '/life/campus' },
-      { label: 'Accommodation', href: '/life/accommodation' },
-      { label: 'Kathmandu Life', href: '/life/city' },
-      { label: 'Students\' Union', href: '/life/students-union' },
-      { label: 'Clubs & Societies', href: '/life/clubs' },
-      { label: 'Sport & Fitness', href: '/life/sport' },
-      { label: 'Careers Support', href: '/life/careers' },
-      { label: 'Wellbeing', href: '/life/wellbeing' },
+      { label: 'Campus & Facilities', href: '/life/campus' },
+      { label: 'Accommodation & Housing', href: '/life/accommodation' },
+      { label: 'Kathmandu Student Life', href: '/life/city' },
+      { label: 'Students\' Union & Societies', href: '/life' },
+      { label: 'Sports, Clubs & Activities', href: '/life' },
+      { label: 'Careers & Employability', href: '/life' },
+      { label: 'Wellbeing & Student Support', href: '/life' },
     ],
     research: [
-      { label: 'Research Themes', href: '/research' },
-      { label: 'Our Researchers', href: '/research/researchers' },
-      { label: 'Research Centres', href: '/research/centres' },
+      { label: 'Research Themes Overview', href: '/research' },
+      { label: 'AI & Machine Learning', href: '/research/ai-ml' },
+      { label: 'Sustainable Computing', href: '/research/sustainable-computing' },
+      { label: 'Cybersecurity & Privacy', href: '/research/cybersecurity' },
+      { label: 'Data Science & Analytics', href: '/research/data-science' },
+      { label: 'Research Centres & Labs', href: '/research/centres' },
       { label: 'PhD Opportunities', href: '/research/phd-opportunities' },
-      { label: 'Publications', href: '/research/repository' },
-      { label: 'Funding & Grants', href: '/research/funding' },
-      { label: 'Industry Partners', href: '/collaborate/research' },
+      { label: 'Faculty Researchers', href: '/research/researchers' },
+      { label: 'Publications Repository', href: '/research/repository' },
       { label: 'Research Impact', href: '/research/impact' },
     ],
     collaborate: [
-      { label: 'Business Partnerships', href: '/collaborate/business' },
-      { label: 'Hire Graduates', href: '/collaborate/hire' },
-      { label: 'Research Collaboration', href: '/collaborate/research' },
-      { label: 'Innovation Centre', href: '/collaborate/innovation-centre' },
-      { label: 'Consultancy', href: '/collaborate/consultancy' },
-      { label: 'Facilities Hire', href: '/collaborate/facilities' },
-      { label: 'International Partners', href: '/collaborate/international' },
-      { label: 'Contact Us', href: '/collaborate/contact' },
+      { label: 'Business & Industry Partnerships', href: '/collaborate' },
+      { label: 'Hire Graduate Talent', href: '/collaborate' },
+      { label: 'Joint Research & R&D', href: '/collaborate' },
+      { label: 'Innovation Centre & Incubator', href: '/collaborate' },
+      { label: 'Lab & Facilities Hire', href: '/collaborate' },
+      { label: 'Contact Business Team', href: '/collaborate' },
     ],
     news: [
-      { label: 'Latest News', href: '/news' },
-      { label: 'Upcoming Events', href: '/events' },
-      { label: 'Research News', href: '/news?category=research' },
-      { label: 'Student Stories', href: '/news?category=student' },
-      { label: 'Open Days', href: '/events?type=open-day' },
-      { label: 'Workshops', href: '/events?type=workshop' },
-      { label: 'Newsletter', href: '/newsletter' },
-      { label: 'Press Office', href: '/about/press' },
+      { label: 'All University News', href: '/news' },
+      { label: 'Upcoming Events & Open Days', href: '/events' },
+      { label: 'Research Discoveries', href: '/news?category=research' },
+      { label: 'Student Achievements', href: '/news?category=student' },
+      { label: 'Open Days Schedule', href: '/events?type=open-day' },
     ],
     alumni: [
-      { label: 'Alumni Stories', href: '/alumni/stories' },
-      { label: 'Find Alumni', href: '/alumni/directory' },
-      { label: 'Events & Reunions', href: '/alumni/events' },
-      { label: 'Benefits & Services', href: '/alumni/benefits' },
-      { label: 'Volunteer', href: '/alumni/volunteer' },
-      { label: 'Give Back', href: '/alumni/giving' },
-      { label: 'Update Details', href: '/alumni/update' },
-      { label: 'Contact Us', href: '/alumni/contact' },
+      { label: 'Alumni Network & Stories', href: '/alumni' },
+      { label: 'Alumni Profiles', href: '/alumni' },
+      { label: 'Events & Reunions', href: '/alumni' },
+      { label: 'Career Services for Alumni', href: '/alumni' },
+      { label: 'Update Your Details', href: '/alumni' },
     ],
     about: [
-      { label: 'Welcome from Director', href: '/about/director' },
-      { label: 'History & Heritage', href: '/about/history' },
-      { label: 'Vision & Values', href: '/about/vision' },
-      { label: 'Governance', href: '/about/governance' },
-      { label: 'Rankings & Awards', href: '/about/rankings' },
-      { label: 'Campus Info', href: '/about/campus' },
-      { label: 'Policies', href: '/about/policies' },
-      { label: 'Contact', href: '/contact' },
+      { label: 'About IIC Overview', href: '/about' },
+      { label: 'Director\'s Welcome', href: '/about' },
+      { label: 'Heritage & Vision', href: '/about' },
+      { label: 'Accreditation & Affiliations', href: '/about' },
+      { label: 'Campus Location & Contact', href: '/contact' },
     ],
   };
   return items[menu] || [];

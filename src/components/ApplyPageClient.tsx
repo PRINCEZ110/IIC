@@ -12,7 +12,7 @@ export default function ApplyPageClient() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Apply to IIC"
           subheadline="Your journey to a world-class technology education starts here. Our streamlined application process takes just a few minutes."
@@ -54,8 +54,8 @@ export default function ApplyPageClient() {
                     transition={{ delay: 0.1 * index }}
                     className="group relative p-6 bg-off-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300"
                   >
-                    <span className="font-display font-extrabold text-lime text-3xl mb-4 block">{item.step}</span>
-                    <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h3>
+                    <span className="font-display font-extrabold text-lime-deep text-3xl mb-4 block">{item.step}</span>
+                    <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                     <p className="text-dark-grey">{item.desc}</p>
                   </motion.article>
                 ))}
@@ -69,7 +69,7 @@ export default function ApplyPageClient() {
                     <a href="#application-form">Start Your Application</a>
                   </Button>
                   <Button variant="outline" size="lg" fullWidth asChild>
-                    <a href="/admissions/requirements">View Entry Requirements</a>
+                    <Link href="/admissions/requirements">View Entry Requirements</Link>
                   </Button>
                 </div>
               </div>
@@ -97,7 +97,7 @@ export default function ApplyPageClient() {
                     >
                       <summary className="flex items-center justify-between p-5 font-medium text-navy cursor-pointer list-none">
                         {faq.q}
-                        <svg className="w-5 h-5 text-navy/50 group-hover:text-lime transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <svg className="w-5 h-5 text-navy/50 group-hover:text-lime-deep transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </summary>
@@ -116,7 +116,7 @@ export default function ApplyPageClient() {
           title="Need Help with Your Application?"
           description="Our admissions team is here to guide you through every step of the process."
           primaryCta={{ text: 'Contact Admissions', href: '/contact' }}
-          secondaryCta={{ text: 'Live Chat', href: '/admissions/live-chat' }}
+          secondaryCta={{ text: 'Live Chat', href: '/contact' }}
           variant="lime"
         />
       </main>

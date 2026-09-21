@@ -12,26 +12,26 @@ export const metadata: Metadata = {
 };
 
 const collaborateAreas = [
-  { icon: '🤝', title: 'Business Partnerships', desc: 'Strategic alliances, joint ventures, and long-term collaboration models tailored to your needs.', link: '/collaborate/business' },
-  { icon: '👥', title: 'Hire Our Graduates', desc: 'Access 94% employment-ready talent. Career fairs, internships, degree apprenticeships.', link: '/collaborate/hire' },
-  { icon: '🔬', title: 'Research Collaboration', desc: 'Joint research projects, funded PhDs, access to specialist labs and expertise.', link: '/collaborate/research' },
-  { icon: '💡', title: 'Innovation Centre', desc: 'Co-working, incubation, accelerator programmes, and startup support.', link: '/collaborate/innovation-centre' },
-  { icon: '📋', title: 'Consultancy Services', desc: 'Expert advisory from our faculty in AI, cybersecurity, data science, and software engineering.', link: '/collaborate/consultancy' },
-  { icon: '🏢', title: 'Facilities Hire', desc: 'Specialist labs, meeting rooms, event spaces, and testbeds for hire.', link: '/collaborate/facilities' },
-  { icon: '🌍', title: 'International Partners', desc: 'Global university network, research mobility, transnational education.', link: '/collaborate/international' },
-  { icon: '📞', title: 'Contact Us', desc: 'Start a conversation with our Business Development team.', link: '/collaborate/contact' },
+  { icon: '🤝', title: 'Business Partnerships', desc: 'Strategic alliances, joint ventures, and long-term collaboration models tailored to your needs.', link: '/collaborate' },
+  { icon: '👥', title: 'Hire Our Graduates', desc: 'Access 94% employment-ready talent. Career fairs, internships, degree apprenticeships.', link: '/collaborate' },
+  { icon: '🔬', title: 'Research Collaboration', desc: 'Joint research projects, funded PhDs, access to specialist labs and expertise.', link: '/collaborate' },
+  { icon: '💡', title: 'Innovation Centre', desc: 'Co-working, incubation, accelerator programmes, and startup support.', link: '/collaborate' },
+  { icon: '📋', title: 'Consultancy Services', desc: 'Expert advisory from our faculty in AI, cybersecurity, data science, and software engineering.', link: '/collaborate' },
+  { icon: '🏢', title: 'Facilities Hire', desc: 'Specialist labs, meeting rooms, event spaces, and testbeds for hire.', link: '/collaborate' },
+  { icon: '🌍', title: 'International Partners', desc: 'Global university network, research mobility, transnational education.', link: '/collaborate' },
+  { icon: '📞', title: 'Contact Us', desc: 'Start a conversation with our Business Development team.', link: '/collaborate' },
 ];
 
 export default function CollaboratePage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Collaborate\nwith IIC"
           subheadline="Partner with Nepal's leading IT institute. Business partnerships, research collaboration, talent recruitment, consultancy, and innovation."
-          primaryCta={{ text: 'Start a Conversation', href: '/collaborate/contact' }}
-          secondaryCta={{ text: 'Hire Graduates', href: '/collaborate/hire' }}
+          primaryCta={{ text: 'Start a Conversation', href: '/collaborate' }}
+          secondaryCta={{ text: 'Hire Graduates', href: '/collaborate' }}
           image="/images/collaborate-hero.jpg"
           imageAlt="Industry collaboration at IIC"
           variant="page"
@@ -62,7 +62,7 @@ export default function CollaboratePage() {
                   className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full"
                 >
                   <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h3>
+                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                   <p className="text-dark-grey">{item.desc}</p>
                 </article>
               ))}
@@ -85,9 +85,9 @@ export default function CollaboratePage() {
                   className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full"
                 >
                   <div className="text-4xl mb-4" aria-hidden="true">{area.icon}</div>
-                  <h3 className="font-display font-bold text-navy text-lg mb-2 group-hover:text-lime transition-colors">{area.title}</h3>
+                  <h3 className="font-display font-bold text-navy text-lg mb-2 group-hover:text-lime-deep transition-colors">{area.title}</h3>
                   <p className="text-dark-grey text-sm mb-4">{area.desc}</p>
-                  <Link href={area.link} className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime transition-colors group">
+                  <Link href={area.link} className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime-deep transition-colors group">
                     Explore
                     <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                   </Link>
@@ -116,12 +116,12 @@ export default function CollaboratePage() {
                   className="group bg-white/10 border border-white/20 hover:border-lime hover:bg-white/20 transition-all duration-300 p-6 h-full"
                 >
                   <div className="flex items-start gap-3 mb-3">
-                    <div className="w-10 h-10 bg-lime/20 text-lime flex items-center justify-center rounded-none flex-shrink-0 group-hover:bg-lime group-hover:text-navy transition-colors">
+                    <div className="w-10 h-10 bg-lime/20 text-lime-deep flex items-center justify-center rounded-none flex-shrink-0 group-hover:bg-lime group-hover:text-navy transition-colors">
                       <svg className="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                     </div>
                     <div>
                       <h3 className="font-display font-bold text-white text-lg">{item.partner}</h3>
-                      <p className="text-lime text-sm font-medium">{item.project}</p>
+                      <p className="text-lime-deep text-sm font-medium">{item.project}</p>
                     </div>
                   </div>
                   <p className="text-white/70 text-sm">{item.result}</p>
@@ -134,7 +134,7 @@ export default function CollaboratePage() {
         <CTASection
           title="Let's Start a Conversation"
           description="Whether you have a specific project in mind or want to explore possibilities, our Business Development team is ready to talk."
-          primaryCta={{ text: 'Contact Business Development', href: '/collaborate/contact' }}
+          primaryCta={{ text: 'Contact Business Development', href: '/collaborate' }}
           secondaryCta={{ text: 'View All Partnership Options', href: '/collaborate' }}
           variant="lime"
         />
@@ -144,22 +144,22 @@ export default function CollaboratePage() {
           links={[
             {
               label: 'Partnership Framework',
-              href: '/collaborate/framework',
+              href: '/collaborate',
               description: 'Our structured approach to collaboration with defined pathways.',
             },
             {
               label: 'Intellectual Property Policy',
-              href: '/collaborate/ip-policy',
+              href: '/collaborate',
               description: 'Clear guidelines on IP ownership and commercialisation.',
             },
             {
               label: 'Facilities Brochure',
-              href: '/assets/facilities-brochure.pdf',
+              href: '/collaborate',
               description: 'Detailed specifications of our specialist labs and spaces for hire.',
             },
             {
               label: 'Case Studies',
-              href: '/collaborate/case-studies',
+              href: '/collaborate',
               description: 'Detailed examples of successful partnerships across sectors.',
             },
           ]}

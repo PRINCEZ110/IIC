@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '@/hooks/useMediaQuery';
 import { cn } from '@/lib/utils';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 interface ExploreLinksProps {
@@ -17,7 +18,7 @@ interface ExploreLinksProps {
   variant?: 'default' | 'alternating';
 }
 
-export function ExploreLinks({ title, links, variant = 'default' }: ExploreLinksProps) {
+export function ExploreLinks({ title, links }: ExploreLinksProps) {
   const reducedMotion = useReducedMotion();
 
   return (
@@ -57,7 +58,7 @@ export function ExploreLinks({ title, links, variant = 'default' }: ExploreLinks
                 'group relative p-6 md:p-8 bg-white border border-light-grey',
                 'hover:border-lime hover:shadow-xl transition-all duration-300',
                 'flex flex-col h-full',
-                link.featured && 'border-2 border-lime relative'
+                link.featured && 'border-2 border-lime'
               )}
               role="listitem"
             >
@@ -68,32 +69,39 @@ export function ExploreLinks({ title, links, variant = 'default' }: ExploreLinks
               )}
 
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 bg-lime/10 flex items-center justify-center flex-shrink-0 group-hover:bg-lime group-hover:text-white transition-colors">
-                  {link.icon || (
-                    <svg className="w-6 h-6 text-lime group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                    </svg>
+                <div className="w-12 h-12 bg-lime/10 flex items-center justify-center flex-shrink-0 group-hover:bg-lime transition-colors duration-200">
+                  {link.icon ? (
+                    <span className="text-lime-deep group-hover:text-navy transition-colors duration-200">
+                      {link.icon}
+                    </span>
+                  ) : (
+                    <ArrowRight
+                      className="w-5 h-5 text-lime-deep group-hover:text-navy transition-colors duration-200"
+                      aria-hidden="true"
+                    />
                   )}
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-display font-bold text-navy text-lg group-hover:text-lime transition-colors">
+                  <h3 className="font-display font-bold text-navy text-lg group-hover:text-lime-deep transition-colors">
                     {link.label}
                   </h3>
                 </div>
               </div>
 
               {link.description && (
-                <p className="text-dark-grey text-sm mb-4 flex-1">{link.description}</p>
+                <p className="text-dark-grey text-sm mb-4 flex-1 leading-relaxed">{link.description}</p>
               )}
 
               <Link
                 href={link.href}
-                className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime transition-colors mt-auto group"
+                className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime-deep transition-colors mt-auto group/link"
+                aria-label={`Explore ${link.label}`}
               >
                 Explore
-                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                <ArrowRight
+                  className="w-4 h-4 transition-transform group-hover/link:translate-x-1"
+                  aria-hidden="true"
+                />
               </Link>
             </motion.article>
           ))}

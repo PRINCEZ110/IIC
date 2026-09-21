@@ -5,6 +5,7 @@ import { Hero } from '@/sections/Hero';
 import { CTASection } from '@/sections/CTASection';
 import { ExploreLinks } from '@/sections/ExploreLinks';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Student Accommodation',
@@ -22,12 +23,12 @@ export default function AccommodationPage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Your Home\nat IIC"
           subheadline="Safe, comfortable, and convenient accommodation options. Guaranteed housing for all first-year undergraduates."
-          primaryCta={{ text: 'Apply for Accommodation', href: '/life/accommodation/apply' }}
-          secondaryCta={{ text: 'Virtual Tour', href: '/life/accommodation/tour' }}
+          primaryCta={{ text: 'Apply for Accommodation', href: '/contact' }}
+          secondaryCta={{ text: 'Virtual Tour', href: '/visit/virtual-tour' }}
           image="/images/accommodation-hero.jpg"
           imageAlt="Student accommodation at IIC"
           variant="life"
@@ -55,7 +56,7 @@ export default function AccommodationPage() {
                   className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 text-center"
                 >
                   <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h3>
+                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                   <p className="text-dark-grey">{item.desc}</p>
                 </article>
               ))}
@@ -81,10 +82,12 @@ export default function AccommodationPage() {
                   className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col"
                 >
                   <div className="relative aspect-video overflow-hidden bg-light-grey">
-                    <img
+                    <Image
                       src={`/images/hall-${hall.name.toLowerCase().replace(/\s+/g, '-')}.jpg`}
-                      alt=""
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      alt={hall.name}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                     <div className="absolute top-4 left-4 flex flex-wrap gap-2">
                       <span className="px-2 py-1 bg-lime text-navy text-xs font-bold uppercase tracking-wider">{hall.type}</span>
@@ -96,7 +99,7 @@ export default function AccommodationPage() {
                     <h3 className="font-display font-bold text-navy text-2xl mb-2">{hall.name}</h3>
                     <div className="flex items-center gap-4 text-sm text-medium-grey mb-4">
                       <span className="flex items-center gap-1"><span aria-hidden="true">🍽️</span> {hall.catering}</span>
-                      <span className="flex items-center gap-1 font-display font-bold text-lime">{hall.price}</span>
+                      <span className="flex items-center gap-1 font-display font-bold text-lime-deep">{hall.price}</span>
                     </div>
 
                     <ul className="flex flex-wrap gap-2 mb-6 flex-1" role="list">
@@ -106,8 +109,8 @@ export default function AccommodationPage() {
                     </ul>
 
                     <Link
-                      href={`/life/accommodation/${hall.name.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime transition-colors mt-auto group"
+                      href="/contact"
+                      className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime-deep transition-colors mt-auto group"
                     >
                       View Details
                       <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
@@ -223,7 +226,7 @@ export default function AccommodationPage() {
         <CTASection
           title="Secure Your Room"
           description="Applications for September 2024 open in March. Apply early for your preferred hall."
-          primaryCta={{ text: 'Apply for Accommodation', href: '/life/accommodation/apply' }}
+          primaryCta={{ text: 'Apply for Accommodation', href: '/contact' }}
           secondaryCta={{ text: 'Book a Tour', href: '/visit/campus-tour' }}
           variant="lime"
         />
@@ -233,27 +236,27 @@ export default function AccommodationPage() {
           links={[
             {
               label: 'Virtual Accommodation Tour',
-              href: '/life/accommodation/tour',
+              href: '/visit/virtual-tour',
               description: 'Explore our halls from anywhere with 360° views.',
             },
             {
               label: 'Private Rented Accommodation',
-              href: '/life/accommodation/private',
+              href: '/life/accommodation',
               description: 'Approved providers and advice on private renting.',
             },
             {
               label: 'International Students',
-              href: '/life/accommodation/international',
+              href: '/study/international',
               description: 'Airport pickup, early arrival, and cultural support.',
             },
             {
               label: 'Accessibility Needs',
-              href: '/life/accessibility#accommodation',
+              href: '/accessibility#accommodation',
               description: 'Adapted rooms and tailored support for disabilities.',
             },
             {
               label: 'FAQs',
-              href: '/life/accommodation/faq',
+              href: '/life/accommodation',
               description: 'Common questions about contracts, guests, and more.',
             },
           ]}

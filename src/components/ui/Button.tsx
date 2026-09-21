@@ -82,10 +82,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       />
     );
 
-    const Comp = asChild ? Slot : 'button';
+    if (asChild) {
+      return (
+        <Slot
+          ref={ref}
+          className={cn(baseStyles, variants[variant], sizes[size], widthStyles, className)}
+          {...props}
+        >
+          {children}
+        </Slot>
+      );
+    }
 
     return (
-      <Comp
+      <button
         ref={ref}
         className={cn(baseStyles, variants[variant], sizes[size], widthStyles, className)}
         disabled={disabled || loading}
@@ -120,7 +130,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             {arrowIcon}
           </>
         )}
-      </Comp>
+      </button>
     );
   }
 );

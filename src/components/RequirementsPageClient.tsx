@@ -6,16 +6,12 @@ import { Footer } from '@/components/ui/Footer';
 import { Hero } from '@/sections/Hero';
 import { CTASection } from '@/sections/CTASection';
 import { courses } from '@/data/university';
-import { formatDate } from '@/lib/utils';
-import { Button } from '@/components/ui/Button';
-import Link from 'next/link';
-import { Calendar, MapPin, Clock, DollarSign, Award, BookOpen } from 'lucide-react';
 
 export default function RequirementsPageClient() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Entry\nRequirements"
           subheadline="Find the academic and English language requirements for your chosen programme. We consider each application holistically."
@@ -104,7 +100,7 @@ export default function RequirementsPageClient() {
                   >
                     <h3 className="font-display font-bold text-navy text-xl mb-2">{item.title}</h3>
                     <p className="text-dark-grey mb-4">{item.score}</p>
-                    <span className="inline-flex items-center gap-2 text-lime font-medium">
+                    <span className="inline-flex items-center gap-2 text-lime-deep font-medium">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                       Accepted
                     </span>
@@ -144,7 +140,7 @@ export default function RequirementsPageClient() {
                   className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6"
                 >
                   <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h3>
+                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                   <p className="text-dark-grey text-sm mb-4">{item.desc}</p>
                   <span className="inline-flex items-center gap-1 text-sm font-medium">
                     {item.required ? (

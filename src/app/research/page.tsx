@@ -7,8 +7,7 @@ import { ResearchImpact } from '@/sections/ResearchImpact';
 import { PeopleCarousel } from '@/sections/PeopleCarousel';
 import { CTASection } from '@/sections/CTASection';
 import { ExploreLinks } from '@/sections/ExploreLinks';
-import { researchThemes, researchStats, researchers } from '@/data/university';
-import Link from 'next/link';
+import { researchStats, researchers } from '@/data/university';
 
 export const metadata: Metadata = {
   title: 'Research & Innovation',
@@ -19,11 +18,11 @@ export default function ResearchPage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="On the Frontline of\nResearch & Innovation"
           subheadline="We're tackling the challenges facing our world head-on. From climate change to healthcare, our researchers are making a measurable difference."
-          primaryCta={{ text: 'Explore Research Themes', href: '/research#themes' }}
+          primaryCta={{ text: 'Explore Research Themes', href: '/research/centres' }}
           secondaryCta={{ text: 'View Our Researchers', href: '/research/researchers' }}
           image="/images/research-hero.jpg"
           imageAlt="Research at IIC"
@@ -51,8 +50,8 @@ export default function ResearchPage() {
         <CTASection
           title="Collaborate with Our Researchers"
           description="Partner with IIC on research projects, access our facilities, or fund a PhD studentship."
-          primaryCta={{ text: 'Business Partnerships', href: '/collaborate/research' }}
-          secondaryCta={{ text: 'Fund a PhD', href: '/study/research/funded' }}
+          primaryCta={{ text: 'Business Partnerships', href: '/collaborate' }}
+          secondaryCta={{ text: 'Fund a PhD', href: '/research/phd-opportunities' }}
           variant="lime"
         />
 
@@ -81,12 +80,12 @@ export default function ResearchPage() {
             },
             {
               label: 'Research Ethics & Governance',
-              href: '/research/ethics',
+              href: '/research',
               description: 'Policies, compliance, and integrity framework.',
             },
             {
               label: 'Knowledge Exchange',
-              href: '/collaborate/knowledge-exchange',
+              href: '/collaborate',
               description: 'Commercialisation, IP, and industry engagement.',
             },
           ]}

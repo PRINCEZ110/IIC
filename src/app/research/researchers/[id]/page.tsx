@@ -2,11 +2,10 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
-import { Hero } from '@/sections/Hero';
-import { CTASection } from '@/sections/CTASection';
 import { researchers } from '@/data/university';
 import Link from 'next/link';
-import { ArrowLeft, Award, BookOpen, Globe } from 'lucide-react';
+import { ArrowLeft, Award,  Globe } from 'lucide-react';
+import Image from 'next/image';
 
 interface ResearcherDetailProps {
   params: Promise<{ id: string }>;
@@ -49,10 +48,10 @@ export default async function ResearcherDetailPage({ params }: ResearcherDetailP
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <article className="py-16 md:py-24 bg-white">
           <div className="container max-w-4xl">
-            <Link href="/research/researchers" className="inline-flex items-center gap-2 text-navy/60 hover:text-lime transition-colors mb-8 group">
+            <Link href="/research/researchers" className="inline-flex items-center gap-2 text-navy/60 hover:text-lime-deep transition-colors mb-8 group">
               <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" aria-hidden="true" />
               Back to Researchers
             </Link>
@@ -64,11 +63,13 @@ export default async function ResearcherDetailPage({ params }: ResearcherDetailP
 
               <div className="flex flex-col md:flex-row md:items-center gap-8 mb-6">
                 <div className="relative w-32 h-32 md:w-40 md:h-40 flex-shrink-0 overflow-hidden bg-light-grey">
-                  <img
-                    src={researcher.image}
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
+                  <Image
+                src={researcher.image}
+                alt={researcher.name}
+                fill
+                className="object-cover"
+                sizes="160px"
+              />
                 </div>
 
                 <div className="flex-1">
@@ -88,7 +89,7 @@ export default async function ResearcherDetailPage({ params }: ResearcherDetailP
                   </div>
 
                   <div className="flex items-center gap-4 text-sm text-medium-grey">
-                    <a href={`mailto:${researcher.email}`} className="flex items-center gap-1 hover:text-lime transition-colors">
+                    <a href={`mailto:${researcher.email}`} className="flex items-center gap-1 hover:text-lime-deep transition-colors">
                       <span className="w-4 h-4" aria-hidden="true">📧</span>
                       {researcher.email}
                     </a>
@@ -131,15 +132,17 @@ export default async function ResearcherDetailPage({ params }: ResearcherDetailP
                   {relatedResearchers.map((colleague) => (
                     <Link key={colleague.id} href={`/research/researchers/${colleague.id}`} className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col">
                       <div className="relative aspect-square overflow-hidden bg-light-grey">
-                        <img
-                          src={colleague.image}
-                          alt=""
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
+                        <Image
+                src={colleague.image}
+                alt={colleague.name}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+              />
                       </div>
                       <div className="p-5 flex-1 flex flex-col">
-                        <h3 className="font-display font-bold text-navy text-lg mb-1 group-hover:text-lime transition-colors">{colleague.name}</h3>
-                        <p className="text-lime text-sm font-medium mb-1">{colleague.title}</p>
+                        <h3 className="font-display font-bold text-navy text-lg mb-1 group-hover:text-lime-deep transition-colors">{colleague.name}</h3>
+                        <p className="text-lime-deep text-sm font-medium mb-1">{colleague.title}</p>
                         <p className="text-dark-grey text-sm flex-1 line-clamp-2">{colleague.bio}</p>
                       </div>
                     </Link>

@@ -2,11 +2,11 @@
 
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '@/hooks/useMediaQuery';
-import { cn } from '@/lib/utils';
 import { news, events } from '@/data/university';
 import { formatDate } from '@/lib/utils';
 import Link from 'next/link';
-import { Calendar, MapPin, ArrowRight } from 'lucide-react';
+import { Calendar, MapPin, Clock, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 interface NewsEventsProps {
   featuredNews?: typeof news[0];
@@ -34,11 +34,17 @@ export function NewsEvents({ featuredNews, newsItems = news.slice(1, 4), eventIt
               </h2>
             </div>
             <div className="flex flex-wrap gap-4">
-              <Link href="/news" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime transition-colors">
+              <Link
+                href="/news"
+                className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime-deep transition-colors group"
+              >
                 All News
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
               </Link>
-              <Link href="/events" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime transition-colors">
+              <Link
+                href="/events"
+                className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime-deep transition-colors group"
+              >
                 All Events
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
               </Link>
@@ -47,6 +53,7 @@ export function NewsEvents({ featuredNews, newsItems = news.slice(1, 4), eventIt
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* News Column */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -62,11 +69,13 @@ export function NewsEvents({ featuredNews, newsItems = news.slice(1, 4), eventIt
               <article className="mb-8 group">
                 <Link href={`/news/${featuredNews.slug}`} className="block h-full">
                   <div className="relative aspect-video overflow-hidden bg-light-grey mb-4">
-                    <img
-                      src={featuredNews.image}
-                      alt=""
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                    <Image
+                src={featuredNews.image}
+                alt={featuredNews.title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                sizes="(max-width: 1024px) 100vw, 66vw"
+              />
                     <div className="absolute top-4 left-4">
                       <span className="px-3 py-1 bg-lime text-navy text-xs font-bold uppercase tracking-wider">
                         {featuredNews.category}
@@ -78,7 +87,7 @@ export function NewsEvents({ featuredNews, newsItems = news.slice(1, 4), eventIt
                     <span aria-hidden="true">·</span>
                     <span>{featuredNews.readTime}</span>
                   </div>
-                  <h4 className="font-display font-bold text-navy text-xl md:text-2xl mb-2 group-hover:text-lime transition-colors line-clamp-2">
+                  <h4 className="font-display font-bold text-navy text-xl md:text-2xl mb-2 group-hover:text-lime-deep transition-colors line-clamp-2">
                     {featuredNews.title}
                   </h4>
                   <p className="text-dark-grey text-sm line-clamp-2">{featuredNews.excerpt}</p>
@@ -97,19 +106,24 @@ export function NewsEvents({ featuredNews, newsItems = news.slice(1, 4), eventIt
                   className="group flex gap-4"
                   role="listitem"
                 >
-                  <Link href={`/news/${item.slug}`} className="flex-shrink-0 relative w-24 h-24 md:w-28 md:h-28 overflow-hidden bg-light-grey">
-                    <img
-                      src={item.image}
-                      alt=""
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
+                  <Link
+                    href={`/news/${item.slug}`}
+                    className="flex-shrink-0 relative w-24 h-24 md:w-28 md:h-28 overflow-hidden bg-light-grey"
+                  >
+                    <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                sizes="112px"
+              />
                   </Link>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-3 text-xs text-medium-grey mb-2">
-                      <span className="px-2 py-0.5 bg-lime/10 text-lime font-medium">{item.category}</span>
+                      <span className="px-2 py-0.5 bg-lime/10 text-lime-deep font-medium">{item.category}</span>
                       <time dateTime={item.date}>{formatDate(item.date)}</time>
                     </div>
-                    <h4 className="font-display font-semibold text-navy text-base md:text-lg mb-1 group-hover:text-lime transition-colors line-clamp-2">
+                    <h4 className="font-display font-semibold text-navy text-base md:text-lg mb-1 group-hover:text-lime-deep transition-colors line-clamp-2">
                       <Link href={`/news/${item.slug}`}>{item.title}</Link>
                     </h4>
                     <p className="text-dark-grey text-sm line-clamp-1">{item.excerpt}</p>
@@ -119,6 +133,7 @@ export function NewsEvents({ featuredNews, newsItems = news.slice(1, 4), eventIt
             </div>
           </motion.div>
 
+          {/* Events Column */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -126,7 +141,7 @@ export function NewsEvents({ featuredNews, newsItems = news.slice(1, 4), eventIt
             transition={reducedMotion ? { duration: 0 } : { duration: 0.6, ease: [0.4, 0, 0.2, 1], delay: 0.1 }}
           >
             <h3 className="font-display font-bold text-navy text-2xl md:text-3xl mb-6 flex items-center gap-3">
-              <span className="w-1 h-8 bg-blue-500" aria-hidden="true" />
+              <span className="w-1 h-8 bg-bright-blue" aria-hidden="true" />
               Upcoming Events
             </h3>
 
@@ -143,6 +158,7 @@ export function NewsEvents({ featuredNews, newsItems = news.slice(1, 4), eventIt
                 >
                   <Link href={`/events/${event.slug}`} className="block p-5 md:p-6">
                     <div className="flex flex-col md:flex-row md:items-center gap-5">
+                      {/* Date badge */}
                       <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-navy text-white flex flex-col items-center justify-center relative">
                         <span className="font-display font-extrabold text-3xl md:text-4xl leading-none">
                           {new Date(event.date).getDate()}
@@ -155,31 +171,39 @@ export function NewsEvents({ featuredNews, newsItems = news.slice(1, 4), eventIt
 
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-3 text-sm text-medium-grey mb-2">
-                          <span className="px-2 py-1 bg-blue-500/10 text-blue-500 font-medium text-xs">{event.type}</span>
+                          <span className="px-2 py-1 bg-bright-blue/10 text-bright-blue font-medium text-xs">
+                            {event.type}
+                          </span>
                           <span className="flex items-center gap-1">
                             <MapPin className="w-3.5 h-3.5" aria-hidden="true" />
                             {event.location}
                           </span>
                         </div>
-                        <h4 className="font-display font-semibold text-navy text-lg md:text-xl mb-1 group-hover:text-lime transition-colors">
+                        <h4 className="font-display font-semibold text-navy text-lg md:text-xl mb-1 group-hover:text-lime-deep transition-colors">
                           {event.title}
                         </h4>
-                        <p className="text-dark-grey text-sm mb-2 line-clamp-1">{event.description}</p>
+                        <p className="text-dark-grey text-sm mb-3 line-clamp-1">{event.description}</p>
                         <div className="flex items-center gap-4 text-sm text-medium-grey">
                           <span className="flex items-center gap-1">
                             <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
-                            {new Date(event.date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                            {new Date(event.date).toLocaleDateString('en-GB', {
+                              weekday: 'short',
+                              day: 'numeric',
+                              month: 'long',
+                              year: 'numeric',
+                            })}
                           </span>
+                          {/* Fixed: was MapPin, should be Clock for time */}
                           <span className="flex items-center gap-1">
-                            <MapPin className="w-3.5 h-3.5" aria-hidden="true" />
+                            <Clock className="w-3.5 h-3.5" aria-hidden="true" />
                             {event.time}
                           </span>
                         </div>
                       </div>
 
                       <div className="flex-shrink-0 ml-auto md:ml-0">
-                        <span className="inline-flex items-center gap-1 text-navy font-medium hover:text-lime transition-colors group">
-                          View Details
+                        <span className="inline-flex items-center gap-1 text-navy font-semibold hover:text-lime-deep transition-colors">
+                          Details
                           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                         </span>
                       </div>
@@ -190,7 +214,10 @@ export function NewsEvents({ featuredNews, newsItems = news.slice(1, 4), eventIt
             </div>
 
             <div className="mt-8 text-center">
-              <Link href="/events" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime transition-colors">
+              <Link
+                href="/events"
+                className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime-deep transition-colors group"
+              >
                 View All Events
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
               </Link>

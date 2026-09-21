@@ -5,7 +5,7 @@ import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { Hero } from '@/sections/Hero';
 import { CTASection } from '@/sections/CTASection';
-import { news } from '@/data/university';
+import Link from 'next/link';
 
 export default function RepositoryPageClient() {
   const publications = [
@@ -24,12 +24,12 @@ export default function RepositoryPageClient() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Research\nRepository"
           subheadline="Open-access publications from IIC researchers. 150+ papers across AI, Cybersecurity, Data Science, and Sustainable Computing."
           primaryCta={{ text: 'Browse Publications', href: '#publications' }}
-          secondaryCta={{ text: 'Submit Your Paper', href: '/research/submit' }}
+          secondaryCta={{ text: 'Submit Your Paper', href: '/research/repository' }}
           image="/images/repository-hero.jpg"
           imageAlt="Research repository"
           variant="page"
@@ -75,13 +75,13 @@ export default function RepositoryPageClient() {
                   >
                     <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-display font-bold text-navy text-lg md:text-xl mb-2 group-hover:text-lime transition-colors">
+                        <h3 className="font-display font-bold text-navy text-lg md:text-xl mb-2 group-hover:text-lime-deep transition-colors">
                           {pub.title}
                         </h3>
                         <p className="text-medium-grey text-sm mb-2">{pub.authors}</p>
                         <p className="text-medium-grey text-sm">
                           <span className="font-medium">{pub.venue}</span>, {pub.year} •
-                          <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" className="text-lime hover:underline ml-2">
+                          <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" className="text-lime-deep hover:underline ml-2">
                             DOI: {pub.doi}
                           </a>
                         </p>
@@ -91,7 +91,7 @@ export default function RepositoryPageClient() {
                         {pub.openAccess && (
                           <span className="px-2 py-1 bg-green-500/10 text-green-600 text-xs font-medium">Open Access</span>
                         )}
-                        <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-navy font-medium hover:text-lime transition-colors group">
+                        <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-navy font-medium hover:text-lime-deep transition-colors group">
                           View Paper
                           <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </a>
@@ -111,7 +111,7 @@ export default function RepositoryPageClient() {
                 transition={{ delay: 0.3 }}
                 className="mt-12 text-center"
               >
-                <p className="text-dark-grey mb-6">Showing 10 of 150+ publications. <a href="/research/repository/all" className="text-lime font-medium hover:underline">View all publications</a></p>
+                <p className="text-dark-grey mb-6">Showing 10 of 150+ publications. <Link href="/research/repository" className="text-lime-deep font-medium hover:underline">View all publications</Link></p>
               </motion.div>
             </div>
           </div>
@@ -183,8 +183,8 @@ export default function RepositoryPageClient() {
         <CTASection
           title="Submit Your Research"
           description="IIC researchers can submit their publications to the repository. Contact the library for submission guidelines."
-          primaryCta={{ text: 'Submission Guidelines', href: '/research/submit' }}
-          secondaryCta={{ text: 'Contact Library', href: '/life/campus/library' }}
+          primaryCta={{ text: 'Submission Guidelines', href: '/research/repository' }}
+          secondaryCta={{ text: 'Contact Library', href: '/life/campus' }}
           variant="lime"
         />
       </main>

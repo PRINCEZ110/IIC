@@ -6,6 +6,7 @@ import { CTASection } from '@/sections/CTASection';
 import { ExploreLinks } from '@/sections/ExploreLinks';
 import { StatsSection } from '@/sections/StatsSection';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Kathmandu - Your Student City',
@@ -30,7 +31,7 @@ export default function CityPage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Kathmandu.\nYour Student City."
           subheadline="Ancient temples meet modern tech scene. Affordable living, incredible food, and the Himalayas on your doorstep."
@@ -64,9 +65,9 @@ export default function CityPage() {
                   className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full"
                 >
                   <div className="text-4xl mb-4" aria-hidden="true">{area.icon}</div>
-                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{area.name}</h3>
+                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{area.name}</h3>
                   <p className="text-dark-grey text-sm mb-3">{area.desc}</p>
-                  <div className="flex items-center gap-2 text-sm text-lime font-medium">
+                  <div className="flex items-center gap-2 text-sm text-lime-deep font-medium">
                     <span aria-hidden="true">📍</span>
                     <span>{area.distance} from campus</span>
                   </div>
@@ -80,11 +81,13 @@ export default function CityPage() {
           <div className="container">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               <div className="relative aspect-[4/3] bg-light-grey overflow-hidden">
-                <img
-                  src="/images/kathmandu-culture.jpg"
-                  alt="Cultural festival in Kathmandu"
-                  className="w-full h-full object-cover"
-                />
+                <Image
+                src="/images/kathmandu-culture.jpg"
+                alt="Cultural festival in Kathmandu"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
               </div>
               <div className="space-y-6">
                 <h2 id="culture-heading" className="font-display font-extrabold text-navy leading-tight text-3xl md:text-5xl lg:text-6xl">
@@ -150,8 +153,8 @@ export default function CityPage() {
             </div>
 
             <div className="mt-12 text-center">
-              <p className="text-dark-grey mb-4">Estimated monthly budget (excluding tuition): <span className="font-display font-bold text-lime text-2xl">Rs. 35,000 - 55,000</span></p>
-              <Link href="/life/city/budget-calculator" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime transition-colors">
+              <p className="text-dark-grey mb-4">Estimated monthly budget (excluding tuition): <span className="font-display font-bold text-lime-deep text-2xl">Rs. 35,000 - 55,000</span></p>
+              <Link href="/life/city" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime-deep transition-colors">
                 Try Our Budget Calculator
                 <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </Link>
@@ -209,7 +212,7 @@ export default function CityPage() {
                   className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full text-center"
                 >
                   <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h3>
+                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                   <p className="text-dark-grey">{item.desc}</p>
                 </article>
               ))}
@@ -221,7 +224,7 @@ export default function CityPage() {
           title="Ready to Explore?"
           description="Visit Kathmandu and see why students fall in love with this city."
           primaryCta={{ text: 'Book a Campus Tour', href: '/visit/campus-tour' }}
-          secondaryCta={{ text: 'Virtual City Tour', href: '/life/city/virtual-tour' }}
+          secondaryCta={{ text: 'Virtual City Tour', href: '/visit/virtual-tour' }}
           variant="blue"
         />
 
@@ -230,22 +233,22 @@ export default function CityPage() {
           links={[
             {
               label: 'International Student Guide',
-              href: '/life/city/international-guide',
+              href: '/study/international',
               description: 'Visa, registration, banking, and settling in for international students.',
             },
             {
               label: 'Health & Safety',
-              href: '/life/city/health-safety',
+              href: '/life/city',
               description: 'Hospitals, pharmacies, emergency numbers, and staying safe.',
             },
             {
               label: 'Food Guide',
-              href: '/life/city/food',
+              href: '/life/city',
               description: 'Best student-friendly restaurants, cafes, and street food.',
             },
             {
               label: 'Weekend Trip Planner',
-              href: '/life/city/weekends',
+              href: '/life/city',
               description: 'Curated itineraries for 1-3 day trips from Kathmandu.',
             },
           ]}

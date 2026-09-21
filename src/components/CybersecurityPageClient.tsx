@@ -7,6 +7,7 @@ import { Hero } from '@/sections/Hero';
 import { CTASection } from '@/sections/CTASection';
 import { researchers } from '@/data/university';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function CybersecurityPageClient() {
   const themeResearchers = researchers.filter(r => r.department === 'Cybersecurity');
@@ -14,12 +15,12 @@ export default function CybersecurityPageClient() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Cybersecurity\n& Privacy"
           subheadline="Protecting Digital Assets in a Connected World. Advanced threat detection, privacy-preserving frameworks, and secure software development."
           primaryCta={{ text: 'View Researchers', href: '/research/researchers?dept=cyber' }}
-          secondaryCta={{ text: 'Collaborate', href: '/collaborate/research' }}
+          secondaryCta={{ text: 'Collaborate', href: '/collaborate' }}
           image="/images/research-cyber-hero.jpg"
           imageAlt="Cybersecurity research at IIC"
           variant="research"
@@ -39,7 +40,7 @@ export default function CybersecurityPageClient() {
                 </h2>
                 <div className="prose prose-lg text-dark-grey leading-relaxed max-w-none">
                   <p className="text-lg mb-6">As digital systems become critical to every aspect of society, our Cybersecurity research theme focuses on building resilient, trustworthy, and privacy-preserving digital infrastructure.</p>
-                  <p className="mb-6">We work across the full security stack—from hardware-level protections to application-layer defenses, from network monitoring to cryptographic protocols. Our research directly supports Nepal's critical infrastructure, banking sector, and government digital transformation.</p>
+                  <p className="mb-6">We work across the full security stack—from hardware-level protections to application-layer defenses, from network monitoring to cryptographic protocols. Our research directly supports Nepal&apos;s critical infrastructure, banking sector, and government digital transformation.</p>
                   <p className="mb-6">We maintain active collaborations with government agencies, financial institutions, and international security research communities.</p>
                 </div>
               </motion.div>
@@ -63,7 +64,7 @@ export default function CybersecurityPageClient() {
                     className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full"
                   >
                     <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                    <h4 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h4>
+                    <h4 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h4>
                     <p className="text-dark-grey">{item.desc}</p>
                   </motion.article>
                 ))}
@@ -103,15 +104,17 @@ export default function CybersecurityPageClient() {
                   >
                     <Link href={`/research/researchers/${researcher.id}`} className="block">
                       <div className="relative aspect-square overflow-hidden bg-light-grey">
-                        <img
-                          src={researcher.image}
-                          alt=""
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
+                        <Image
+                src={researcher.image}
+                alt={researcher.name}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+              />
                       </div>
                       <div className="p-5">
-                        <h4 className="font-display font-bold text-navy text-lg mb-1 group-hover:text-lime transition-colors">{researcher.name}</h4>
-                        <p className="text-lime text-sm font-medium mb-1">{researcher.title}</p>
+                        <h4 className="font-display font-bold text-navy text-lg mb-1 group-hover:text-lime-deep transition-colors">{researcher.name}</h4>
+                        <p className="text-lime-deep text-sm font-medium mb-1">{researcher.title}</p>
                         <p className="text-dark-grey text-sm line-clamp-2">{researcher.bio}</p>
                       </div>
                     </Link>
@@ -125,7 +128,7 @@ export default function CybersecurityPageClient() {
         <CTASection
           title="Strengthen Your Security Posture"
           description="Partner with our cybersecurity researchers on threat assessment, secure architecture, and incident response."
-          primaryCta={{ text: 'Collaborate with Us', href: '/collaborate/research' }}
+          primaryCta={{ text: 'Collaborate with Us', href: '/collaborate' }}
           secondaryCta={{ text: 'View All Researchers', href: '/research/researchers' }}
           variant="lime"
         />

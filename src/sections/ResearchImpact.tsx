@@ -35,8 +35,6 @@ export function ResearchImpact({ title, subtitle, stats = researchStats, variant
 
   const styles = getStyles();
 
-  if (!isInView && !reducedMotion) return <div ref={ref} className={variants[variant]} />;
-
   return (
     <section
       ref={ref}

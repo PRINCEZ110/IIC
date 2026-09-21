@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { useReducedMotion } from '@/hooks/useMediaQuery';
 import { useRouter } from 'next/navigation';
 import { courses, news, events, researchers } from '@/data/university';
+import Link from 'next/link';
 
 interface SearchResult {
   type: 'course' | 'news' | 'event' | 'researcher' | 'page';
@@ -180,6 +181,7 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
                   ref={inputRef}
                   id="search-input"
                   type="search"
+                  role="combobox"
                   value={query}
                   onChange={e => setQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
@@ -239,7 +241,7 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
                       onMouseEnter={() => setSelectedIndex(index)}
                       onClick={() => router.push(result.href)}
                     >
-                      <a
+                      <Link
                         href={result.href}
                         className="flex items-center gap-5 p-5 w-full text-left"
                         onClick={e => e.stopPropagation()}
@@ -251,7 +253,7 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
                           <p className="text-white text-lg font-medium truncate group-hover:text-lime transition-colors">
                             {result.title}
                           </p>
-                          <p className="text-navy/50 text-sm mt-1 truncate">
+                          <p className="text-white/60 text-sm mt-1 truncate">
                             {result.description}
                           </p>
                         </div>
@@ -260,7 +262,7 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
                             {result.category}
                           </span>
                         )}
-                      </a>
+                      </Link>
                     </motion.li>
                   ))}
                 </motion.ul>
@@ -271,14 +273,14 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mt-8 text-center text-navy/50 text-lg"
+                className="mt-8 text-center text-white/60 text-lg"
               >
                 No results found for &ldquo;{query}&rdquo;
               </motion.p>
             )}
 
             <div className="mt-10 pt-8 border-t border-white/10">
-              <p className="text-navy/40 text-sm text-center">
+              <p className="text-white/40 text-sm text-center">
                 Press <kbd className="px-2 py-0.5 bg-white/10 rounded text-white mx-1 font-mono">Esc</kbd> to close
                 {' '}·{' '}
                 <kbd className="px-2 py-0.5 bg-white/10 rounded text-white mx-1 font-mono">↑</kbd>

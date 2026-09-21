@@ -6,6 +6,7 @@ import { CTASection } from '@/sections/CTASection';
 import { ExploreLinks } from '@/sections/ExploreLinks';
 import { researchers } from '@/data/university';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Postgraduate Research Degrees',
@@ -16,12 +17,12 @@ export default function ResearchDegreesPage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Postgraduate\nResearch Degrees"
           subheadline="Push the boundaries of knowledge with our MPhil and PhD programmes. Join a vibrant research community tackling global challenges through computing."
           primaryCta={{ text: 'Find a Supervisor', href: '/research/researchers' }}
-          secondaryCta={{ text: 'Funded Opportunities', href: '/study/research/funded' }}
+          secondaryCta={{ text: 'Funded Opportunities', href: '/research/phd-opportunities' }}
           image="/images/research-hero.jpg"
           imageAlt="Research at IIC"
           variant="research"
@@ -41,7 +42,7 @@ export default function ResearchDegreesPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
               <article className="bg-white border border-light-grey hover:border-lime transition-all duration-300 p-8 h-full">
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-12 h-12 bg-lime/10 text-lime font-display font-bold text-2xl flex items-center justify-center">MPhil</span>
+                  <span className="w-12 h-12 bg-lime/10 text-lime-deep font-display font-bold text-2xl flex items-center justify-center">MPhil</span>
                 </div>
                 <h3 className="font-display font-bold text-navy text-2xl mb-4">Master of Philosophy (MPhil)</h3>
                 <ul className="space-y-3 text-dark-grey" role="list">
@@ -50,7 +51,7 @@ export default function ResearchDegreesPage() {
                   <li className="flex items-start gap-3"><span className="w-2 h-2 bg-lime rounded-full mt-2 flex-shrink-0" aria-hidden="true" /><span>Can upgrade to PhD after successful review</span></li>
                   <li className="flex items-start gap-3"><span className="w-2 h-2 bg-lime rounded-full mt-2 flex-shrink-0" aria-hidden="true" /><span>Ideal for those exploring research before committing to PhD</span></li>
                 </ul>
-                <Link href="/study/courses/mphil-cs" className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime transition-colors mt-6 group">
+                <Link href="/study/courses/mphil-cs" className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime-deep transition-colors mt-6 group">
                   Learn More
                   <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 </Link>
@@ -101,7 +102,7 @@ export default function ResearchDegreesPage() {
                   <h3 className="font-display font-bold text-white text-xl mb-2 group-hover:text-lime transition-colors">{area.title}</h3>
                   <p className="text-white/60 text-sm mb-3">{area.desc}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-lime text-sm font-medium">{area.count}</span>
+                    <span className="text-lime-deep text-sm font-medium">{area.count}</span>
                     <Link href={area.href} className="text-white font-medium hover:text-lime transition-colors inline-flex items-center gap-1 text-sm group">
                       Explore
                       <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
@@ -132,15 +133,17 @@ export default function ResearchDegreesPage() {
                 >
                   <Link href={`/research/researchers/${researcher.id}`} className="block">
                     <div className="relative aspect-square overflow-hidden bg-light-grey">
-                      <img
-                        src={researcher.image}
-                        alt=""
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
+                      <Image
+                src={researcher.image}
+                alt={researcher.name}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+              />
                     </div>
                     <div className="p-5">
-                      <h3 className="font-display font-bold text-navy text-lg mb-1 group-hover:text-lime transition-colors">{researcher.name}</h3>
-                      <p className="text-lime text-sm font-medium mb-2">{researcher.title}</p>
+                      <h3 className="font-display font-bold text-navy text-lg mb-1 group-hover:text-lime-deep transition-colors">{researcher.name}</h3>
+                      <p className="text-lime-deep text-sm font-medium mb-2">{researcher.title}</p>
                       <p className="text-medium-grey text-sm mb-3">{researcher.department}</p>
                       <p className="text-dark-grey text-sm line-clamp-2">{researcher.bio}</p>
                     </div>
@@ -150,7 +153,7 @@ export default function ResearchDegreesPage() {
             </div>
 
             <div className="text-center mt-10">
-              <Link href="/research/researchers" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime transition-colors text-lg">
+              <Link href="/research/researchers" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime-deep transition-colors text-lg">
                 View All Researchers ({researchers.length}+)
                 <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </Link>
@@ -171,10 +174,10 @@ export default function ResearchDegreesPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
-                { title: 'IIC Doctoral Scholarships', desc: 'Full tuition waiver + monthly stipend for 3 years. Open to all nationalities.', deadline: 'Rolling', href: '/study/research/funded#iic-scholarships' },
-                { title: 'Government Research Grants', desc: 'Funded by Nepal Research Council and Ministry of Education for priority areas.', deadline: 'Annual', href: '/study/research/funded#gov-grants' },
-                { title: 'Industry-Sponsored PhDs', desc: 'Collaborative projects with partner companies including stipend and industry placement.', deadline: 'Varies', href: '/study/research/funded#industry' },
-                { title: 'International Funding', desc: 'Commonwealth, DAAD, and other international scholarship programmes.', deadline: 'Annual', href: '/study/research/funded#international' },
+                { title: 'IIC Doctoral Scholarships', desc: 'Full tuition waiver + monthly stipend for 3 years. Open to all nationalities.', deadline: 'Rolling', href: '/research/phd-opportunities' },
+                { title: 'Government Research Grants', desc: 'Funded by Nepal Research Council and Ministry of Education for priority areas.', deadline: 'Annual', href: '/research/phd-opportunities' },
+                { title: 'Industry-Sponsored PhDs', desc: 'Collaborative projects with partner companies including stipend and industry placement.', deadline: 'Varies', href: '/research/phd-opportunities' },
+                { title: 'International Funding', desc: 'Commonwealth, DAAD, and other international scholarship programmes.', deadline: 'Annual', href: '/research/phd-opportunities' },
               ].map((funding, index) => (
                 <article
                   key={index}
@@ -185,7 +188,7 @@ export default function ResearchDegreesPage() {
                   <div className="flex items-center justify-between text-sm text-medium-grey mb-4">
                     <span>Deadline: <span className="font-medium text-navy">{funding.deadline}</span></span>
                   </div>
-                  <Link href={funding.href} className="inline-flex items-center gap-2 text-lime font-medium hover:text-lime-dark transition-colors group">
+                  <Link href={funding.href} className="inline-flex items-center gap-2 text-lime-deep font-medium hover:text-lime-deep transition-colors group">
                     View Details
                     <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                   </Link>
@@ -198,8 +201,8 @@ export default function ResearchDegreesPage() {
         <CTASection
           title="Ready to Start Your Research Journey?"
           description="Contact our Graduate Research School for guidance on proposals, funding, and finding the right supervisor."
-          primaryCta={{ text: 'Contact Graduate Research', href: '/study/research/contact' }}
-          secondaryCta={{ text: 'View All Opportunities', href: '/study/research/funded' }}
+          primaryCta={{ text: 'Contact Graduate Research', href: '/contact' }}
+          secondaryCta={{ text: 'View All Opportunities', href: '/research/phd-opportunities' }}
           variant="lime"
         />
 
@@ -208,12 +211,12 @@ export default function ResearchDegreesPage() {
           links={[
             {
               label: 'How to Apply',
-              href: '/study/research/apply',
+              href: '/admissions/apply',
               description: 'Step-by-step guide to the research degree application process.',
             },
             {
               label: 'Research Proposal Guidelines',
-              href: '/study/research/proposal',
+              href: '/contact',
               description: 'Tips and templates for writing a strong research proposal.',
             },
             {
@@ -223,7 +226,7 @@ export default function ResearchDegreesPage() {
             },
             {
               label: 'Research Facilities',
-              href: '/life/campus/labs',
+              href: '/life/campus',
               description: 'Explore our specialist labs and research centres.',
             },
           ]}

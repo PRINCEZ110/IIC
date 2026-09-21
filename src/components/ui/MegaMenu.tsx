@@ -1,19 +1,17 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { useReducedMotion } from '@/hooks/useMediaQuery';
-import { navigationItems } from '@/data/university';
-import { studyCategories, lifeCategories, researchThemes, researchStats, researchers, news, events, alumni, universityInfo, stats, ctaSections } from '@/data/university';
+import { researchThemes, news, events } from '@/data/university';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface MegaMenuProps {
   isOpen: boolean;
   activeMenu: string | null;
   onClose: () => void;
-  onMenuChange: (menu: string | null) => void;
 }
 
 const megaMenuContent: Record<string, {
@@ -55,14 +53,14 @@ const megaMenuContent: Record<string, {
           { label: 'MPhil Computer Science', href: '/study/courses/mphil-cs', description: '2 years • Full-time' },
           { label: 'PhD Computer Science', href: '/study/courses/phd-cs', description: '3-4 years • Full-time' },
           { label: 'PhD Data Science', href: '/study/courses/phd-ds', description: '3-4 years • Full-time' },
-          { label: 'Funded PhD Opportunities', href: '/study/research/funded', description: 'Scholarships available' },
+          { label: 'Funded PhD Opportunities', href: '/research/phd-opportunities', description: 'Scholarships available' },
         ],
       },
       {
         heading: 'More Study Options',
         links: [
           { label: 'Professional & Short Courses', href: '/study/professional', description: 'Certifications & Bootcamps' },
-          { label: 'Online & Distance Learning', href: '/study/online', description: 'Flexible study options' },
+          { label: 'Online & Distance Learning', href: '/study', description: 'Flexible study options' },
           { label: 'International Students', href: '/study/international', description: 'Entry requirements & visas' },
           { label: 'Open Days & Events', href: '/events?type=open-day', description: 'Visit our campus' },
         ],
@@ -82,36 +80,36 @@ const megaMenuContent: Record<string, {
         heading: 'Campus & Facilities',
         links: [
           { label: 'Our Campus', href: '/life/campus', description: 'Modern facilities in Kathmandu' },
-          { label: 'Library & Learning Resources', href: '/life/campus/library', description: '50,000+ volumes & digital access' },
-          { label: 'Labs & Research Centres', href: '/life/campus/labs', description: '8 specialised laboratories' },
-          { label: 'Student Spaces', href: '/life/campus/spaces', description: 'Collaborative & social areas' },
+          { label: 'Library & Learning Resources', href: '/life/campus', description: '50,000+ volumes & digital access' },
+          { label: 'Labs & Research Centres', href: '/life/campus', description: '8 specialised laboratories' },
+          { label: 'Student Spaces', href: '/life/campus', description: 'Collaborative & social areas' },
         ],
       },
       {
         heading: 'Accommodation',
         links: [
-          { label: 'On-Campus Halls', href: '/life/accommodation/halls', description: 'Guaranteed for first years' },
-          { label: 'Private Accommodation', href: '/life/accommodation/private', description: 'Approved partner providers' },
-          { label: 'Costs & Applications', href: '/life/accommodation/costs', description: 'Fees & how to apply' },
-          { label: 'Virtual Accommodation Tour', href: '/life/accommodation/tour', description: 'Explore from anywhere' },
+          { label: 'On-Campus Halls', href: '/life/accommodation', description: 'Guaranteed for first years' },
+          { label: 'Private Accommodation', href: '/life/accommodation', description: 'Approved partner providers' },
+          { label: 'Costs & Applications', href: '/life/accommodation', description: 'Fees & how to apply' },
+          { label: 'Virtual Accommodation Tour', href: '/visit/virtual-tour', description: 'Explore from anywhere' },
         ],
       },
       {
         heading: 'Student Experience',
         links: [
-          { label: 'Students\' Union', href: '/life/students-union', description: 'Your voice, your community' },
-          { label: 'Clubs & Societies', href: '/life/clubs', description: '100+ student-led groups' },
-          { label: 'Sport & Fitness', href: '/life/sport', description: 'Teams, classes & facilities' },
-          { label: 'Events & Social Life', href: '/life/events', description: 'What\'s on this term' },
+          { label: 'Students\' Union', href: '/life', description: 'Your voice, your community' },
+          { label: 'Clubs & Societies', href: '/life', description: '100+ student-led groups' },
+          { label: 'Sport & Fitness', href: '/life', description: 'Teams, classes & facilities' },
+          { label: 'Events & Social Life', href: '/events', description: 'What\'s on this term' },
         ],
       },
       {
         heading: 'Support & Careers',
         links: [
-          { label: 'Careers & Employability', href: '/life/careers', description: '94% graduate employment' },
-          { label: 'Wellbeing & Support', href: '/life/wellbeing', description: 'Health, counselling & advice' },
-          { label: 'International Student Support', href: '/life/international-support', description: 'Visa, orientation & community' },
-          { label: 'Disability & Accessibility', href: '/life/accessibility', description: 'Inclusive learning support' },
+          { label: 'Careers & Employability', href: '/life', description: '94% graduate employment' },
+          { label: 'Wellbeing & Support', href: '/life', description: 'Health, counselling & advice' },
+          { label: 'International Student Support', href: '/study/international', description: 'Visa, orientation & community' },
+          { label: 'Disability & Accessibility', href: '/accessibility', description: 'Inclusive learning support' },
         ],
       },
     ],
@@ -136,17 +134,17 @@ const megaMenuContent: Record<string, {
       {
         heading: 'Research Centres',
         links: [
-          { label: 'Centre for Sustainable Computing', href: '/research/centres/sustainable', description: 'Green technology research' },
-          { label: 'AI & Machine Learning Lab', href: '/research/centres/ai-ml', description: 'Intelligent systems' },
-          { label: 'Cybersecurity Research Centre', href: '/research/centres/cybersecurity', description: 'Digital protection' },
-          { label: 'Data Science Institute', href: '/research/centres/data-science', description: 'Analytics & insights' },
+          { label: 'Centre for Sustainable Computing', href: '/research/centres', description: 'Green technology research' },
+          { label: 'AI & Machine Learning Lab', href: '/research/centres', description: 'Intelligent systems' },
+          { label: 'Cybersecurity Research Centre', href: '/research/centres', description: 'Digital protection' },
+          { label: 'Data Science Institute', href: '/research/centres', description: 'Analytics & insights' },
         ],
       },
       {
         heading: 'Researchers & Projects',
         links: [
           { label: 'Our Researchers', href: '/research/researchers', description: '45+ active researchers' },
-          { label: 'Current Projects', href: '/research/projects', description: '25+ funded projects' },
+          { label: 'Current Projects', href: '/research', description: '25+ funded projects' },
           { label: 'PhD Opportunities', href: '/research/phd-opportunities', description: 'Funded positions available' },
           { label: 'Research Repository', href: '/research/repository', description: 'Open access publications' },
         ],
@@ -154,10 +152,10 @@ const megaMenuContent: Record<string, {
       {
         heading: 'Collaborate & Impact',
         links: [
-          { label: 'Industry Partnerships', href: '/collaborate/research', description: '25+ industry partners' },
+          { label: 'Industry Partnerships', href: '/collaborate', description: '25+ industry partners' },
           { label: 'Funding & Grants', href: '/research/funding', description: 'Rs. 120M+ secured' },
-          { label: 'Knowledge Exchange', href: '/collaborate/knowledge-exchange', description: 'Impact & innovation' },
-          { label: 'Research Ethics', href: '/research/ethics', description: 'Governance & compliance' },
+          { label: 'Knowledge Exchange', href: '/collaborate', description: 'Impact & innovation' },
+          { label: 'Research Ethics', href: '/research', description: 'Governance & compliance' },
         ],
       },
     ],
@@ -174,37 +172,37 @@ const megaMenuContent: Record<string, {
       {
         heading: 'Work with Us',
         links: [
-          { label: 'Business Partnerships', href: '/collaborate/business', description: 'Tailored collaboration models' },
-          { label: 'Research Collaboration', href: '/collaborate/research', description: 'Joint research projects' },
-          { label: 'Knowledge Exchange', href: '/collaborate/knowledge-exchange', description: 'Innovation & commercialisation' },
-          { label: 'Consultancy Services', href: '/collaborate/consultancy', description: 'Expert advisory services' },
+          { label: 'Business Partnerships', href: '/collaborate', description: 'Tailored collaboration models' },
+          { label: 'Research Collaboration', href: '/collaborate', description: 'Joint research projects' },
+          { label: 'Knowledge Exchange', href: '/collaborate', description: 'Innovation & commercialisation' },
+          { label: 'Consultancy Services', href: '/collaborate', description: 'Expert advisory services' },
         ],
       },
       {
         heading: 'Talent & Recruitment',
         links: [
-          { label: 'Hire Our Graduates', href: '/collaborate/hire', description: '94% employment rate' },
-          { label: 'Internships & Placements', href: '/collaborate/internships', description: 'Industry experience programmes' },
-          { label: 'Degree Apprenticeships', href: '/collaborate/apprenticeships', description: 'Earn while you learn' },
-          { label: 'Career Fairs & Events', href: '/collaborate/events', description: 'Connect with talent' },
+          { label: 'Hire Our Graduates', href: '/collaborate', description: '94% employment rate' },
+          { label: 'Internships & Placements', href: '/collaborate', description: 'Industry experience programmes' },
+          { label: 'Degree Apprenticeships', href: '/collaborate', description: 'Earn while you learn' },
+          { label: 'Career Fairs & Events', href: '/events', description: 'Connect with talent' },
         ],
       },
       {
         heading: 'Facilities & Innovation',
         links: [
-          { label: 'Innovation Centre', href: '/collaborate/innovation-centre', description: 'Co-working & incubation' },
-          { label: 'Specialist Facilities', href: '/collaborate/facilities', description: 'Labs & equipment hire' },
-          { label: 'Testbeds & Living Labs', href: '/collaborate/testbeds', description: 'Real-world environments' },
-          { label: 'Data & Analytics Services', href: '/collaborate/data-services', description: 'Business intelligence' },
+          { label: 'Innovation Centre', href: '/collaborate', description: 'Co-working & incubation' },
+          { label: 'Specialist Facilities', href: '/collaborate', description: 'Labs & equipment hire' },
+          { label: 'Testbeds & Living Labs', href: '/collaborate', description: 'Real-world environments' },
+          { label: 'Data & Analytics Services', href: '/collaborate', description: 'Business intelligence' },
         ],
       },
       {
         heading: 'Global Engagement',
         links: [
-          { label: 'International Partnerships', href: '/collaborate/international', description: 'Global university network' },
-          { label: 'Research Mobility', href: '/collaborate/mobility', description: 'Staff & student exchange' },
-          { label: 'Transnational Education', href: '/collaborate/tneducation', description: 'Joint programmes abroad' },
-          { label: 'Development Projects', href: '/collaborate/development', description: 'Capacity building worldwide' },
+          { label: 'International Partnerships', href: '/collaborate', description: 'Global university network' },
+          { label: 'Research Mobility', href: '/collaborate', description: 'Staff & student exchange' },
+          { label: 'Transnational Education', href: '/collaborate', description: 'Joint programmes abroad' },
+          { label: 'Development Projects', href: '/collaborate', description: 'Capacity building worldwide' },
         ],
       },
     ],
@@ -212,7 +210,7 @@ const megaMenuContent: Record<string, {
       title: 'Partner with IIC',
       description: 'Join 50+ organisations collaborating with our researchers and accessing our talent pipeline.',
       image: '/images/mega-collaborate.jpg',
-      cta: { text: 'Start a Conversation', href: '/collaborate/contact' },
+      cta: { text: 'Start a Conversation', href: '/collaborate' },
     },
   },
   news: {
@@ -257,7 +255,7 @@ const megaMenuContent: Record<string, {
       title: 'Stay Connected',
       description: 'Never miss an update. Subscribe to our newsletter for the latest news and events.',
       image: '/images/mega-news.jpg',
-      cta: { text: 'Subscribe to Newsletter', href: '/newsletter' },
+      cta: { text: 'Subscribe to Newsletter', href: '/contact' },
     },
   },
   alumni: {
@@ -266,37 +264,37 @@ const megaMenuContent: Record<string, {
       {
         heading: 'Alumni Community',
         links: [
-          { label: 'Alumni Stories', href: '/alumni/stories', description: 'Inspiring graduate journeys' },
-          { label: 'Find Alumni', href: '/alumni/directory', description: 'Connect with 3000+ graduates' },
-          { label: 'Alumni Events', href: '/alumni/events', description: 'Reunions & networking' },
-          { label: 'Volunteer & Mentor', href: '/alumni/volunteer', description: 'Give back to IIC' },
+          { label: 'Alumni Stories', href: '/alumni', description: 'Inspiring graduate journeys' },
+          { label: 'Find Alumni', href: '/alumni', description: 'Connect with 3000+ graduates' },
+          { label: 'Alumni Events', href: '/alumni', description: 'Reunions & networking' },
+          { label: 'Volunteer & Mentor', href: '/alumni', description: 'Give back to IIC' },
         ],
       },
       {
         heading: 'Benefits & Services',
         links: [
-          { label: 'Lifelong Learning', href: '/alumni/learning', description: 'Course discounts & access' },
-          { label: 'Career Support', href: '/alumni/careers', description: 'Lifelong career services' },
-          { label: 'Library Access', href: '/alumni/library', description: 'Continued resource access' },
-          { label: 'Email for Life', href: '/alumni/email', description: 'Keep your @iic.edu.np address' },
+          { label: 'Lifelong Learning', href: '/alumni', description: 'Course discounts & access' },
+          { label: 'Career Support', href: '/alumni', description: 'Lifelong career services' },
+          { label: 'Library Access', href: '/alumni', description: 'Continued resource access' },
+          { label: 'Email for Life', href: '/alumni', description: 'Keep your @iic.edu.np address' },
         ],
       },
       {
         heading: 'Giving Back',
         links: [
-          { label: 'Donate to IIC', href: '/alumni/giving', description: 'Support future generations' },
-          { label: 'Scholarship Funds', href: '/alumni/scholarships', description: 'Fund student opportunities' },
-          { label: 'Research Support', href: '/alumni/research-funding', description: 'Enable innovation' },
-          { label: 'Legacy Giving', href: '/alumni/legacy', description: 'Lasting impact' },
+          { label: 'Donate to IIC', href: '/alumni', description: 'Support future generations' },
+          { label: 'Scholarship Funds', href: '/alumni', description: 'Fund student opportunities' },
+          { label: 'Research Support', href: '/alumni', description: 'Enable innovation' },
+          { label: 'Legacy Giving', href: '/alumni', description: 'Lasting impact' },
         ],
       },
       {
         heading: 'Stay in Touch',
         links: [
-          { label: 'Update Your Details', href: '/alumni/update', description: 'Keep your profile current' },
-          { label: 'Alumni Newsletter', href: '/alumni/newsletter', description: 'Monthly updates' },
-          { label: 'Social Media Groups', href: '/alumni/social', description: 'LinkedIn, Facebook, WhatsApp' },
-          { label: 'Contact Alumni Relations', href: '/alumni/contact', description: 'We\'re here to help' },
+          { label: 'Update Your Details', href: '/alumni', description: 'Keep your profile current' },
+          { label: 'Alumni Newsletter', href: '/alumni', description: 'Monthly updates' },
+          { label: 'Social Media Groups', href: '/alumni', description: 'LinkedIn, Facebook, WhatsApp' },
+          { label: 'Contact Alumni Relations', href: '/alumni', description: 'We\'re here to help' },
         ],
       },
     ],
@@ -304,7 +302,7 @@ const megaMenuContent: Record<string, {
       title: 'Global Alumni Network',
       description: 'Join 3,000+ graduates working at leading technology companies worldwide.',
       image: '/images/mega-alumni.jpg',
-      cta: { text: 'Read Alumni Stories', href: '/alumni/stories' },
+      cta: { text: 'Read Alumni Stories', href: '/alumni' },
     },
   },
   about: {
@@ -313,36 +311,36 @@ const megaMenuContent: Record<string, {
       {
         heading: 'Our University',
         links: [
-          { label: 'Welcome from the Director', href: '/about/director', description: 'Leadership message' },
-          { label: 'History & Heritage', href: '/about/history', description: 'Since 2000' },
-          { label: 'Vision, Mission & Values', href: '/about/vision', description: 'Our guiding principles' },
-          { label: 'Governance & Leadership', href: '/about/governance', description: 'Board & committees' },
+          { label: 'Welcome from the Director', href: '/about', description: 'Leadership message' },
+          { label: 'History & Heritage', href: '/about', description: 'Since 2000' },
+          { label: 'Vision, Mission & Values', href: '/about', description: 'Our guiding principles' },
+          { label: 'Governance & Leadership', href: '/about', description: 'Board & committees' },
         ],
       },
       {
         heading: 'Excellence & Recognition',
         links: [
-          { label: 'Rankings & Awards', href: '/about/rankings', description: 'Top IT institute in Nepal' },
-          { label: 'Teaching Excellence', href: '/about/teaching-excellence', description: 'Gold rating' },
-          { label: 'Research Excellence', href: '/about/research-excellence', description: 'World-class impact' },
-          { label: 'Accreditations', href: '/about/accreditations', description: 'UGC, QAA certified' },
+          { label: 'Rankings & Awards', href: '/about', description: 'Top IT institute in Nepal' },
+          { label: 'Teaching Excellence', href: '/about', description: 'Gold rating' },
+          { label: 'Research Excellence', href: '/about', description: 'World-class impact' },
+          { label: 'Accreditations', href: '/about', description: 'UGC, QAA certified' },
         ],
       },
       {
         heading: 'Campus & Location',
         links: [
-          { label: 'Kamaladi Campus', href: '/about/campus', description: 'Heart of Kathmandu' },
-          { label: 'Campus Development', href: '/about/development', description: 'Future plans' },
-          { label: 'Sustainability', href: '/about/sustainability', description: 'Green campus initiative' },
-          { label: 'Visit Us', href: '/visit', description: 'Directions & maps' },
+          { label: 'Kamaladi Campus', href: '/about', description: 'Heart of Kathmandu' },
+          { label: 'Campus Development', href: '/about', description: 'Future plans' },
+          { label: 'Sustainability', href: '/about', description: 'Green campus initiative' },
+          { label: 'Visit Us', href: '/visit/campus-tour', description: 'Directions & maps' },
         ],
       },
       {
         heading: 'Information',
         links: [
-          { label: 'Policies & Regulations', href: '/about/policies', description: 'Key documents' },
-          { label: 'Freedom of Information', href: '/about/foi', description: 'Public access scheme' },
-          { label: 'Modern Slavery Statement', href: '/about/modern-slavery', description: 'Ethical commitments' },
+          { label: 'Policies & Regulations', href: '/about', description: 'Key documents' },
+          { label: 'Freedom of Information', href: '/about', description: 'Public access scheme' },
+          { label: 'Modern Slavery Statement', href: '/about', description: 'Ethical commitments' },
           { label: 'Privacy & Cookies', href: '/privacy', description: 'Data protection' },
         ],
       },
@@ -351,12 +349,12 @@ const megaMenuContent: Record<string, {
       title: 'Since 2000',
       description: 'Over two decades of excellence in computing education, research, and innovation.',
       image: '/images/mega-about.jpg',
-      cta: { text: 'Explore Our History', href: '/about/history' },
+      cta: { text: 'Explore Our History', href: '/about' },
     },
   },
 };
 
-export function MegaMenu({ isOpen, activeMenu, onClose, onMenuChange }: MegaMenuProps) {
+export function MegaMenu({ isOpen, activeMenu, onClose }: MegaMenuProps) {
   const reducedMotion = useReducedMotion();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -459,7 +457,7 @@ export function MegaMenu({ isOpen, activeMenu, onClose, onMenuChange }: MegaMenu
                           <Link
                             href={link.href}
                             onClick={onClose}
-                            className="flex items-start gap-3 group text-navy hover:text-lime transition-colors duration-150"
+                            className="flex items-start gap-3 group text-navy hover:text-lime-deep transition-colors duration-150"
                           >
                             <span className="flex-shrink-0 mt-1 w-1.5 h-1.5 bg-navy/30 group-hover:bg-lime group-hover:w-4 rounded-none transition-all duration-150" aria-hidden="true" />
                             <div className="min-w-0">
@@ -485,10 +483,14 @@ export function MegaMenu({ isOpen, activeMenu, onClose, onMenuChange }: MegaMenu
                 className="flex-1 lg:w-2/5"
               >
                 <div className="relative aspect-[4/3] bg-light-grey overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-lime/20 to-blue/20" aria-hidden="true" />
-                  <div className="absolute inset-0 flex items-center justify-center text-navy/30 text-6xl" aria-hidden="true">
-                    📷
-                  </div>
+                  <Image
+                    src={content.featured.image}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy/40 via-transparent to-transparent" aria-hidden="true" />
                   <div className="absolute inset-0 flex items-end p-6">
                     <div className="w-full bg-white/95 backdrop-blur-sm p-6">
                       <h3 className="text-2xl md:text-3xl font-display font-bold text-navy mb-3">
@@ -498,7 +500,7 @@ export function MegaMenu({ isOpen, activeMenu, onClose, onMenuChange }: MegaMenu
                       <Link
                         href={content.featured.cta.href}
                         onClick={onClose}
-                        className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime transition-colors"
+                        className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime-deep transition-colors"
                       >
                         {content.featured.cta.text}
                         <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
@@ -513,7 +515,7 @@ export function MegaMenu({ isOpen, activeMenu, onClose, onMenuChange }: MegaMenu
 
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-navy/50 hover:text-lime hover:bg-white/50 transition-colors rounded-none lg:hidden"
+          className="absolute top-4 right-4 p-2 text-navy/50 hover:text-lime-deep hover:bg-white/50 transition-colors rounded-none lg:hidden"
           aria-label="Close menu"
         >
           <X className="w-6 h-6" />

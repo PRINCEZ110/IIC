@@ -55,12 +55,12 @@ export default function ProfessionalPageClient() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Professional &\nShort Courses"
           subheadline="Upskill with industry-certified courses and bootcamps at IIC. AWS, Python, Full Stack Development, Data Analytics, and more."
           primaryCta={{ text: 'Browse All Courses', href: '#courses' }}
-          secondaryCta={{ text: 'Corporate Training', href: '/collaborate/training' }}
+          secondaryCta={{ text: 'Corporate Training', href: '/collaborate' }}
           image="/images/professional-hero.jpg"
           imageAlt="Professional training at IIC"
           variant="page"
@@ -108,14 +108,14 @@ export default function ProfessionalPageClient() {
                     >
                       <div className="flex items-center justify-between mb-3">
                         <span className="px-2 py-1 bg-lime text-navy text-xs font-bold uppercase tracking-wider">{course.level}</span>
-                        <span className="font-display font-bold text-lime text-xl">{course.price}</span>
+                        <span className="font-display font-bold text-lime-deep text-xl">{course.price}</span>
                       </div>
-                      <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{course.name}</h3>
+                      <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{course.name}</h3>
                       <p className="text-dark-grey text-sm mb-4 flex-1">{course.duration} • {course.cert} certification</p>
-                      <a href="/admissions/apply" className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime transition-colors mt-auto group">
-                        Enroll Now
-                        <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                      </a>
+                      <Link href="/admissions/apply" className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime-deep transition-colors mt-auto group">
+                      Enroll Now
+                      <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </Link>
                     </motion.article>
                   ))}
                 </div>
@@ -164,7 +164,7 @@ export default function ProfessionalPageClient() {
                     className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full text-center"
                   >
                     <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                    <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h3>
+                    <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                     <p className="text-dark-grey">{item.desc}</p>
                   </motion.article>
                 );
@@ -208,10 +208,10 @@ export default function ProfessionalPageClient() {
             </div>
 
             <div className="mt-12 text-center">
-              <a href="/collaborate/training" className="inline-flex items-center gap-2 border-2 border-white/30 hover:border-lime text-white font-semibold px-6 py-3 transition-colors group">
-                Discuss Your Training Needs
-                <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-              </a>
+              <Link href="/collaborate" className="inline-flex items-center gap-2 border-2 border-white/30 hover:border-lime text-white font-semibold px-6 py-3 transition-colors group">
+                      Discuss Your Training Needs
+                      <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </Link>
             </div>
           </div>
         </section>

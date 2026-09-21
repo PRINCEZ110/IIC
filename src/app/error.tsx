@@ -6,18 +6,18 @@ import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { Home, RefreshCw } from 'lucide-react';
 
-export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+export default function Error({ reset }: { reset: () => void }) {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24 min-h-[60vh] flex items-center justify-center">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32 min-h-[60vh] flex items-center justify-center">
         <div className="container text-center py-16 md:py-24">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
           >
-            <div className="text-8xl md:text-12xl font-display font-extrabold text-navy mb-6" aria-hidden="true">
+            <div className="text-8xl md:text-9xl font-display font-extrabold text-navy mb-6" aria-hidden="true">
               ⚠️
             </div>
             <h1 className="font-display font-extrabold text-navy text-3xl md:text-5xl lg:text-6xl mb-4">

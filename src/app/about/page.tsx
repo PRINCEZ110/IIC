@@ -5,8 +5,9 @@ import { Hero } from '@/sections/Hero';
 import { StatsSection } from '@/sections/StatsSection';
 import { CTASection } from '@/sections/CTASection';
 import { ExploreLinks } from '@/sections/ExploreLinks';
-import { universityInfo, stats } from '@/data/university';
+import {  stats } from '@/data/university';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'About IIC',
@@ -17,7 +18,7 @@ export default function AboutPage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Since 2000."
           subheadline="Over two decades of excellence in computing education, research, and innovation. Thinking differently about technology education in Nepal."
@@ -38,18 +39,20 @@ export default function AboutPage() {
                   <p>Today, we are Nepal&apos;s premier IT institute, ranked #1 by the University Grants Commission. Our 3,000+ alumni work at leading technology companies worldwide, from Microsoft and Google to innovative Nepali startups.</p>
                   <p>But rankings and statistics only tell part of the story. What truly defines IIC is our community: curious students, passionate researchers, dedicated staff, and engaged industry partners, all united by a belief in the transformative power of technology.</p>
                 </div>
-                <Link href="/about/director" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime transition-colors mt-4 group">
+                <Link href="/about" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime-deep transition-colors mt-4 group">
                   Message from the Director
                   <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 </Link>
               </div>
 
               <div className="relative aspect-[4/3] bg-light-grey overflow-hidden">
-                <img
-                  src="/images/about-welcome.jpg"
-                  alt="IIC campus community"
-                  className="w-full h-full object-cover"
-                />
+                <Image
+                src="/images/about-welcome.jpg"
+                alt="IIC campus community"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
               </div>
             </div>
           </div>
@@ -122,7 +125,7 @@ export default function AboutPage() {
                     </div>
                     <div className="absolute left-2 md:left-2 top-1 w-1 h-full bg-light-grey last:hidden" aria-hidden="true" />
                     <div className="flex items-baseline gap-4 mb-2">
-                      <time className="font-display font-extrabold text-lime text-2xl md:text-3xl" dateTime={item.year}>{item.year}</time>
+                      <time className="font-display font-extrabold text-lime-deep text-2xl md:text-3xl" dateTime={item.year}>{item.year}</time>
                       <h3 className="font-display font-bold text-navy text-xl md:text-2xl">{item.title}</h3>
                     </div>
                     <p className="text-dark-grey ml-10 md:ml-16">{item.desc}</p>
@@ -153,7 +156,7 @@ export default function AboutPage() {
                   className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full text-center"
                 >
                   <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h3>
+                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                   <p className="text-dark-grey">{item.desc}</p>
                 </article>
               ))}
@@ -164,8 +167,8 @@ export default function AboutPage() {
         <CTASection
           title="Discover More About IIC"
           description="Explore our governance, policies, campus development plans, and sustainability commitments."
-          primaryCta={{ text: 'Governance & Leadership', href: '/about/governance' }}
-          secondaryCta={{ text: 'Campus Development', href: '/about/campus' }}
+          primaryCta={{ text: 'Governance & Leadership', href: '/about' }}
+          secondaryCta={{ text: 'Campus Development', href: '/about' }}
           variant="navy"
         />
 
@@ -174,32 +177,32 @@ export default function AboutPage() {
           links={[
             {
               label: 'Governance & Leadership',
-              href: '/about/governance',
+              href: '/about',
               description: 'Board of Governors, Academic Council, and senior leadership team.',
             },
             {
               label: 'Policies & Regulations',
-              href: '/about/policies',
+              href: '/about',
               description: 'Academic regulations, student policies, and institutional documents.',
             },
             {
               label: 'Campus Development',
-              href: '/about/campus',
+              href: '/about',
               description: 'Masterplan, sustainability, and future development projects.',
             },
             {
               label: 'Freedom of Information',
-              href: '/about/foi',
+              href: '/about',
               description: 'Public access to information scheme and requests.',
             },
             {
               label: 'Modern Slavery Statement',
-              href: '/about/modern-slavery',
+              href: '/about',
               description: 'Our commitment to ethical supply chains and labour practices.',
             },
             {
               label: 'Press & Media',
-              href: '/about/press',
+              href: '/news',
               description: 'Media resources, press releases, and brand guidelines.',
             },
           ]}

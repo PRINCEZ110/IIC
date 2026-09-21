@@ -3,8 +3,9 @@
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '@/hooks/useMediaQuery';
 import { Button } from '@/components/ui/Button';
-import { ArrowRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface HeroProps {
   headline: string;
@@ -60,7 +61,34 @@ export function Hero({
   const v = variants[variant];
 
   return (
-    <section className={v.container} aria-labelledby="hero-heading">
+    <section className={cn(v.container, className)} aria-labelledby="hero-heading">
+      {/* Subtle background pattern for home variant */}
+      {variant === 'home' && (
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          {/* Dot grid overlay */}
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage: 'radial-gradient(circle, #080B3D 1px, transparent 1px)',
+              backgroundSize: '32px 32px',
+            }}
+          />
+          {/* Radial gradient mesh */}
+          <div className="absolute inset-0 gradient-mesh opacity-60" />
+          {/* Animated lime accent blob */}
+          {!reducedMotion && (
+            <motion.div
+              className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full"
+              style={{
+                background: 'radial-gradient(ellipse at center, rgba(200,255,0,0.08) 0%, transparent 70%)',
+              }}
+              animate={{ scale: [1, 1.08, 1], opacity: [0.6, 1, 0.6] }}
+              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          )}
+        </div>
+      )}
+
       {image && (
         <div className={v.image} aria-hidden="true">
           <Image
@@ -89,7 +117,7 @@ export function Hero({
               transition={reducedMotion ? { duration: 0 } : { delay: 0.2, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
               className="inline-block px-4 py-2 bg-lime text-navy font-display font-bold text-sm md:text-base rounded-none mb-6"
             >
-              Undergraduate Admissions Open for 2024/25
+              Undergraduate Admissions Open for 2025/26
             </motion.span>
           )}
 
@@ -137,7 +165,7 @@ export function Hero({
                   arrow
                   asChild
                 >
-                  <a href={primaryCta.href}>{primaryCta.text}</a>
+                  <Link href={primaryCta.href}>{primaryCta.text}</Link>
                 </Button>
               )}
               {secondaryCta && (
@@ -146,7 +174,7 @@ export function Hero({
                   size="lg"
                   asChild
                 >
-                  <a href={secondaryCta.href}>{secondaryCta.text}</a>
+                  <Link href={secondaryCta.href}>{secondaryCta.text}</Link>
                 </Button>
               )}
             </motion.div>
@@ -164,11 +192,11 @@ export function Hero({
                 <span>94% Graduate Employment</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-blue-500 rounded-full" aria-hidden="true" />
+                <span className="w-2 h-2 bg-bright-blue rounded-full" aria-hidden="true" />
                 <span>Top IT Institute in Nepal</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-purple-500 rounded-full" aria-hidden="true" />
+                <span className="w-2 h-2 bg-cool-accent rounded-full" aria-hidden="true" />
                 <span>50+ Industry Partners</span>
               </div>
             </motion.div>
@@ -184,5 +212,3 @@ export function Hero({
     </section>
   );
 }
-
-import { cn } from '@/lib/utils';

@@ -5,6 +5,7 @@ import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { Hero } from '@/sections/Hero';
 import { CTASection } from '@/sections/CTASection';
+import Link from 'next/link';
 
 export default function FundingPageClient() {
   const fundingSources = [
@@ -67,12 +68,12 @@ export default function FundingPageClient() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Research Funding\n& Grants"
           subheadline="Explore diverse funding opportunities for your research. Internal grants, national programmes, and international collaborations."
           primaryCta={{ text: 'View Current Calls', href: '#calls' }}
-          secondaryCta={{ text: 'Grant Writing Support', href: '/research/grant-support' }}
+          secondaryCta={{ text: 'Grant Writing Support', href: '/research/funding' }}
           image="/images/funding-hero.jpg"
           imageAlt="Research funding"
           variant="page"
@@ -110,7 +111,7 @@ export default function FundingPageClient() {
                         <div className="flex items-center gap-3 mb-3">
                           <span className="px-3 py-1 bg-lime text-navy text-xs font-bold uppercase tracking-wider">{funding.type}</span>
                         </div>
-                        <h3 className="font-display font-bold text-navy text-xl md:text-2xl mb-2 group-hover:text-lime transition-colors">{funding.name}</h3>
+                        <h3 className="font-display font-bold text-navy text-xl md:text-2xl mb-2 group-hover:text-lime-deep transition-colors">{funding.name}</h3>
                         <p className="text-dark-grey mb-4">{funding.description}</p>
                         <div className="flex flex-wrap gap-4 text-sm text-medium-grey">
                           <span className="flex items-center gap-1"><span aria-hidden="true">💰</span> {funding.amount}</span>
@@ -121,7 +122,7 @@ export default function FundingPageClient() {
                       <div className="md:w-48 flex-shrink-0">
                         <div className="bg-navy text-white p-4 rounded-none text-center">
                           <div className="font-display font-bold text-lg mb-1">Deadline</div>
-                          <div className="font-display font-extrabold text-xl text-lime">{funding.deadline}</div>
+                          <div className="font-display font-extrabold text-xl text-lime-deep">{funding.deadline}</div>
                         </div>
                       </div>
                     </div>
@@ -132,10 +133,10 @@ export default function FundingPageClient() {
                       </div>
                     </div>
                     <div className="flex items-center justify-between pt-4 border-t border-light-grey">
-                      <a href="/research/grant-support" className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime transition-colors group">
-                        Grant Writing Support
-                        <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                      </a>
+                      <Link href="/research/funding" className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime-deep transition-colors group">
+                      Grant Writing Support
+                      <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </Link>
                     </div>
                   </motion.article>
                 ))}
@@ -172,7 +173,7 @@ export default function FundingPageClient() {
                   className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full text-center"
                 >
                   <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
-                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{item.title}</h3>
+                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                   <p className="text-dark-grey">{item.desc}</p>
                 </motion.article>
               ))}
@@ -215,7 +216,7 @@ export default function FundingPageClient() {
         <CTASection
           title="Ready to Fund Your Research?"
           description="Our Research Office provides end-to-end support from idea to funded project."
-          primaryCta={{ text: 'Contact Research Office', href: '/research/grant-support' }}
+          primaryCta={{ text: 'Contact Research Office', href: '/research/funding' }}
           secondaryCta={{ text: 'Grant Writing Workshop', href: '/events?type=workshop' }}
           variant="lime"
         />

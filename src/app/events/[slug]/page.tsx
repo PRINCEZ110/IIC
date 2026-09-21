@@ -5,8 +5,9 @@ import { Footer } from '@/components/ui/Footer';
 import { events } from '@/data/university';
 import { formatDate } from '@/lib/utils';
 import Link from 'next/link';
-import { Calendar, MapPin, Clock, ArrowLeft, User, Tag } from 'lucide-react';
+import { Calendar, MapPin, Clock, ArrowLeft, User} from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import Image from 'next/image';
 
 interface EventDetailProps {
   params: Promise<{ slug: string }>;
@@ -49,10 +50,10 @@ export default async function EventDetailPage({ params }: EventDetailProps) {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <article className="py-16 md:py-24 bg-white">
           <div className="container max-w-4xl">
-            <Link href="/events" className="inline-flex items-center gap-2 text-navy/60 hover:text-lime transition-colors mb-8 group">
+            <Link href="/events" className="inline-flex items-center gap-2 text-navy/60 hover:text-lime-deep transition-colors mb-8 group">
               <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" aria-hidden="true" />
               Back to Events
             </Link>
@@ -61,7 +62,7 @@ export default async function EventDetailPage({ params }: EventDetailProps) {
               <div className="flex flex-wrap items-center gap-3 text-sm text-medium-grey mb-4">
                 <span className="px-3 py-1 bg-blue-500/10 text-blue-500 font-medium">{event.type}</span>
                 {event.registrationRequired && (
-                  <span className="px-3 py-1 bg-lime/10 text-lime font-medium">Registration Required</span>
+                  <span className="px-3 py-1 bg-lime/10 text-lime-deep font-medium">Registration Required</span>
                 )}
               </div>
 
@@ -107,16 +108,18 @@ export default async function EventDetailPage({ params }: EventDetailProps) {
             </header>
 
             <div className="relative aspect-[16/9] overflow-hidden bg-light-grey mb-10 md:mb-14">
-              <img
+              <Image
                 src={event.image}
-                alt=""
-                className="w-full h-full object-cover"
+                alt={event.title}
+                fill
+                className="object-cover"
+                sizes="100vw"
               />
             </div>
 
             <div className="prose prose-lg text-dark-grey leading-relaxed max-w-none mb-10 md:mb-14">
               <p>{event.description}</p>
-              <p>Join us for this exciting event where you'll have the opportunity to learn, network, and engage with experts and peers in the field.</p>
+              <p>Join us for this exciting event where you&apos;ll have the opportunity to learn, network, and engage with experts and peers in the field.</p>
               <h3>What to Expect</h3>
               <ul>
                 <li>Expert presentations and keynote sessions</li>
@@ -143,18 +146,20 @@ export default async function EventDetailPage({ params }: EventDetailProps) {
                   {relatedEvents.map((item) => (
                     <Link key={item.slug} href={`/events/${item.slug}`} className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col">
                       <div className="relative aspect-video overflow-hidden">
-                        <img
-                          src={item.image}
-                          alt=""
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
+                        <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+              />
                       </div>
                       <div className="p-5 flex-1 flex flex-col">
                         <div className="flex items-center gap-2 text-sm text-medium-grey mb-2">
                           <span className="px-2 py-0.5 bg-blue-500/10 text-blue-500 font-medium">{item.type}</span>
                           <time dateTime={item.date}>{formatDate(item.date)}</time>
                         </div>
-                        <h3 className="font-display font-bold text-navy text-lg mb-2 group-hover:text-lime transition-colors line-clamp-2">
+                        <h3 className="font-display font-bold text-navy text-lg mb-2 group-hover:text-lime-deep transition-colors line-clamp-2">
                           {item.title}
                         </h3>
                         <p className="text-dark-grey text-sm flex-1 line-clamp-2">{item.description}</p>

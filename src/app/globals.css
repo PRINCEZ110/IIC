@@ -4,6 +4,7 @@
   --color-lime: #C8FF00;
   --color-lime-dark: #A8D800;
   --color-lime-darker: #88B000;
+  --color-lime-deep: #5A7200;
   --color-bright-blue: #2446E8;
   --color-bright-blue-dark: #1A38C0;
   --color-deep-blue: #1739D7;
@@ -169,6 +170,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -180,17 +182,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: clamp(3rem, 8vw, 9rem);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
   font-weight: var(--font-weight-extrabold);
 }
 
 h2 {
-  font-size: clamp(2.5rem, 6vw, 7rem);
+  font-size: clamp(2rem, 4.5vw, 3.75rem);
   font-weight: var(--font-weight-bold);
 }
 
 h3 {
-  font-size: clamp(1.75rem, 4vw, 3.5rem);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
   font-weight: var(--font-weight-semibold);
 }
 
@@ -210,7 +212,7 @@ h6 {
 }
 
 p {
-  font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+  font-size: clamp(1rem, 1.25vw, 1.125rem);
   line-height: var(--leading-relaxed);
   color: var(--color-dark-grey);
   max-width: 65ch;
@@ -266,6 +268,12 @@ input, textarea, select {
 
 .focus-visible:focus-visible {
   outline: 2px solid var(--color-lime);
+  outline-offset: 2px;
+}
+
+/* Visible keyboard focus for links (buttons carry their own ring styles) */
+a:focus-visible {
+  outline: 2px solid var(--color-bright-blue);
   outline-offset: 2px;
 }
 

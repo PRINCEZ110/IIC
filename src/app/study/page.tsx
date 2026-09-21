@@ -6,7 +6,8 @@ import { CourseSearch } from '@/sections/CourseSearch';
 import { StudyOptions } from '@/sections/StudyOptions';
 import { CTASection } from '@/sections/CTASection';
 import { ExploreLinks } from '@/sections/ExploreLinks';
-import { studyCategories } from '@/data/university';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Study at IIC',
@@ -17,7 +18,7 @@ export default function StudyPage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="Looking for\nWhat's Next?"
           subheadline="Study at International Institute of Computer Science and join a community of innovators, researchers, and future technology leaders."
@@ -48,11 +49,13 @@ export default function StudyPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               <div className="relative aspect-[4/3] bg-light-grey overflow-hidden">
-                <img
-                  src="/images/learning-experience.jpg"
-                  alt="Students collaborating in a modern classroom"
-                  className="w-full h-full object-cover"
-                />
+                <Image
+                src="/images/learning-experience.jpg"
+                alt="Students collaborating in a modern classroom"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
               </div>
               <div className="space-y-6">
                 <h3 className="font-display font-bold text-navy text-2xl md:text-3xl">
@@ -77,12 +80,12 @@ export default function StudyPage() {
                     </li>
                   ))}
                 </ul>
-                <a href="/study/learning-experience" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime transition-colors mt-4">
+                <Link href="/study" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime-deep transition-colors mt-4">
                   Discover Our Learning Approach
                   <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -121,12 +124,12 @@ export default function StudyPage() {
             },
             {
               label: 'Student Support Services',
-              href: '/life/wellbeing',
+              href: '/life',
               description: 'Academic, personal, and career support throughout your studies.',
             },
             {
               label: 'Careers & Employability',
-              href: '/life/careers',
+              href: '/life',
               description: '94% graduate employment rate with lifelong career support.',
             },
           ]}

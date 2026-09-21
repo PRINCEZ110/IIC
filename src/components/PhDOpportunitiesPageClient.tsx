@@ -5,7 +5,6 @@ import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { Hero } from '@/sections/Hero';
 import { CTASection } from '@/sections/CTASection';
-import { researchers } from '@/data/university';
 import { researchThemes } from '@/data/university';
 import Link from 'next/link';
 
@@ -76,12 +75,12 @@ export default function PhDOpportunitiesPageClient() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="PhD\nOpportunities"
           subheadline="Join our vibrant research community. 15+ funded PhD positions available across AI, Cybersecurity, Data Science, and Sustainable Computing."
           primaryCta={{ text: 'View All Positions', href: '#positions' }}
-          secondaryCta={{ text: 'How to Apply', href: '/study/research/apply' }}
+          secondaryCta={{ text: 'How to Apply', href: '/admissions/apply' }}
           image="/images/phd-hero.jpg"
           imageAlt="PhD researchers at work"
           variant="research"
@@ -120,7 +119,7 @@ export default function PhDOpportunitiesPageClient() {
                           <span className="px-3 py-1 bg-lime text-navy text-xs font-bold uppercase tracking-wider">Fully Funded</span>
                           <span className="px-3 py-1 bg-blue-500/10 text-blue-500 font-medium text-xs">{position.theme}</span>
                         </div>
-                        <h3 className="font-display font-bold text-navy text-xl md:text-2xl mb-2 group-hover:text-lime transition-colors">{position.title}</h3>
+                        <h3 className="font-display font-bold text-navy text-xl md:text-2xl mb-2 group-hover:text-lime-deep transition-colors">{position.title}</h3>
                         <p className="text-dark-grey mb-4">{position.description}</p>
                         <div className="flex flex-wrap gap-4 text-sm text-medium-grey">
                           <span className="flex items-center gap-1"><span aria-hidden="true">👨‍🏫</span> Supervisor: {position.supervisor}</span>
@@ -131,7 +130,7 @@ export default function PhDOpportunitiesPageClient() {
                       <div className="md:w-64 flex-shrink-0">
                         <div className="bg-navy text-white p-4 rounded-none text-center">
                           <div className="font-display font-bold text-lg mb-1">Apply By</div>
-                          <div className="font-display font-extrabold text-2xl text-lime">{position.deadline}</div>
+                          <div className="font-display font-extrabold text-2xl text-lime-deep">{position.deadline}</div>
                         </div>
                       </div>
                     </div>
@@ -146,7 +145,7 @@ export default function PhDOpportunitiesPageClient() {
                       </div>
                     </div>
                     <div className="flex items-center justify-between pt-4 border-t border-light-grey">
-                      <Link href="/study/research/apply" className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime transition-colors group">
+                      <Link href="/admissions/apply" className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime-deep transition-colors group">
                         View Details & Apply
                         <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                       </Link>
@@ -180,10 +179,10 @@ export default function PhDOpportunitiesPageClient() {
                   className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full"
                 >
                   <div className="text-4xl mb-4" aria-hidden="true">🔬</div>
-                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime transition-colors">{theme.title}</h3>
-                  <p className="text-lime text-sm font-medium mb-3">{theme.subtitle}</p>
+                  <h3 className="font-display font-bold text-navy text-xl mb-2 group-hover:text-lime-deep transition-colors">{theme.title}</h3>
+                  <p className="text-lime-deep text-sm font-medium mb-3">{theme.subtitle}</p>
                   <p className="text-dark-grey text-sm mb-4 flex-1">{theme.description}</p>
-                  <Link href={theme.href} className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime transition-colors group">
+                  <Link href={theme.href} className="inline-flex items-center gap-2 text-navy font-medium hover:text-lime-deep transition-colors group">
                     Explore PhD Topics
                     <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                   </Link>
@@ -224,10 +223,10 @@ export default function PhDOpportunitiesPageClient() {
             </div>
 
             <div className="mt-12">
-              <a href="/study/research/apply" className="inline-flex items-center gap-2 border-2 border-white/30 hover:border-lime text-white font-semibold px-8 py-4 transition-colors group">
-                Start Your Application
-                <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-              </a>
+              <Link href="/admissions/apply" className="inline-flex items-center gap-2 border-2 border-white/30 hover:border-lime text-white font-semibold px-8 py-4 transition-colors group">
+                      Start Your Application
+                      <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </Link>
             </div>
           </div>
         </section>
@@ -235,8 +234,8 @@ export default function PhDOpportunitiesPageClient() {
         <CTASection
           title="Ready to Begin Your Research Journey?"
           description="Contact our Graduate Research School for guidance on proposals, funding, and finding the right supervisor."
-          primaryCta={{ text: 'Contact Graduate Research', href: '/study/research/contact' }}
-          secondaryCta={{ text: 'View All Opportunities', href: '/study/research/funded' }}
+          primaryCta={{ text: 'Contact Graduate Research', href: '/contact' }}
+          secondaryCta={{ text: 'View All Opportunities', href: '/research/phd-opportunities' }}
           variant="blue"
         />
       </main>

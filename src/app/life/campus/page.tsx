@@ -5,6 +5,7 @@ import { Hero } from '@/sections/Hero';
 import { CTASection } from '@/sections/CTASection';
 import { ExploreLinks } from '@/sections/ExploreLinks';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Campus & Facilities',
@@ -26,7 +27,7 @@ export default function CampusPage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 md:pt-20 lg:pt-24">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24 lg:pt-32">
         <Hero
           headline="One Campus.\nEverything You Need."
           subheadline="Our single-site campus in Kamaladi puts world-class facilities, green spaces, and a vibrant community right on your doorstep."
@@ -56,7 +57,7 @@ export default function CampusPage() {
                   role="listitem"
                 >
                   <div className="text-4xl mb-4" aria-hidden="true">{facility.icon}</div>
-                  <h3 className="font-display font-bold text-navy text-lg mb-2 group-hover:text-lime transition-colors">{facility.name}</h3>
+                  <h3 className="font-display font-bold text-navy text-lg mb-2 group-hover:text-lime-deep transition-colors">{facility.name}</h3>
                   <p className="text-dark-grey text-sm">{facility.desc}</p>
                 </article>
               ))}
@@ -82,7 +83,7 @@ export default function CampusPage() {
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="bg-white/95 backdrop-blur-sm p-8 text-center max-w-md">
                   <p className="text-dark-grey mb-4">Interactive campus map coming soon</p>
-                  <Link href="/visit/virtual-tour" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime transition-colors">
+                  <Link href="/visit/virtual-tour" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime-deep transition-colors">
                     Try Virtual Tour Instead
                     <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                   </Link>
@@ -93,14 +94,14 @@ export default function CampusPage() {
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
               {[
                 { title: 'Virtual Tour', desc: '360° walkthrough of all buildings', href: '/visit/virtual-tour', icon: '🎥' },
-                { title: 'Campus Map PDF', desc: 'Download printable campus map', href: '/assets/campus-map.pdf', icon: '📄' },
-                { title: 'Accessibility Map', desc: 'Step-free routes and facilities', href: '/life/accessibility#map', icon: '♿' },
+                { title: 'Campus Map PDF', desc: 'Download printable campus map', href: '/visit/campus-tour', icon: '📄' },
+                { title: 'Accessibility Map', desc: 'Step-free routes and facilities', href: '/accessibility#map', icon: '♿' },
               ].map((item, index) => (
                 <article key={index} className="group bg-white border border-light-grey hover:border-lime hover:shadow-xl transition-all duration-300 p-6 h-full">
                   <div className="text-3xl mb-3" aria-hidden="true">{item.icon}</div>
-                  <h3 className="font-display font-bold text-navy text-lg mb-1 group-hover:text-lime transition-colors">{item.title}</h3>
+                  <h3 className="font-display font-bold text-navy text-lg mb-1 group-hover:text-lime-deep transition-colors">{item.title}</h3>
                   <p className="text-dark-grey text-sm mb-4">{item.desc}</p>
-                  <Link href={item.href} className="inline-flex items-center gap-1 text-lime font-medium hover:text-lime-dark transition-colors text-sm group">
+                  <Link href={item.href} className="inline-flex items-center gap-1 text-lime-deep font-medium hover:text-lime-deep transition-colors text-sm group">
                     Access
                     <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                   </Link>
@@ -114,11 +115,13 @@ export default function CampusPage() {
           <div className="container">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               <div className="relative aspect-[4/3] bg-light-grey overflow-hidden">
-                <img
-                  src="/images/green-campus.jpg"
-                  alt="Green campus with solar panels and gardens"
-                  className="w-full h-full object-cover"
-                />
+                <Image
+                src="/images/green-campus.jpg"
+                alt="Green campus with solar panels and gardens"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
               </div>
               <div className="space-y-6">
                 <h2 id="green-campus-heading" className="font-display font-extrabold text-navy leading-tight text-3xl md:text-5xl lg:text-6xl">
@@ -143,7 +146,7 @@ export default function CampusPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/about/sustainability" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime transition-colors mt-4">
+                <Link href="/about" className="inline-flex items-center gap-2 text-navy font-semibold hover:text-lime-deep transition-colors mt-4">
                   Our Sustainability Strategy
                   <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 </Link>
@@ -165,22 +168,22 @@ export default function CampusPage() {
           links={[
             {
               label: 'Library & Learning Resources',
-              href: '/life/campus/library',
+              href: '/life/campus',
               description: '50,000+ volumes, 24/7 digital access, specialist collections.',
             },
             {
               label: 'Food & Dining',
-              href: '/life/campus/dining',
+              href: '/life/campus',
               description: 'Cafés, restaurants, and dietary options across campus.',
             },
             {
               label: 'Sports Facilities',
-              href: '/life/sport',
+              href: '/life',
               description: 'Gym, courts, fitness classes, and team sports.',
             },
             {
               label: 'Getting Here',
-              href: '/visit/directions',
+              href: '/visit/campus-tour',
               description: 'Directions, parking, and public transport options.',
             },
           ]}

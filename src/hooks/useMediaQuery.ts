@@ -72,12 +72,22 @@ export function useScrollPosition(): { x: number; y: number } {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
+    let frame = 0;
     const handleScroll = () => {
-      setPosition({ x: window.scrollX, y: window.scrollY });
+      // Coalesce rapid scroll events into one state update per frame
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        setPosition({ x: window.scrollX, y: window.scrollY });
+      });
     };
 
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
   return position;
